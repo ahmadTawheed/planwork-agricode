@@ -1,0 +1,1703 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGRICODE - حلول تدوير المخلفات الزراعية وخدمات البصل المتكاملة</title>
+    
+    <!-- مكتبات خارجية -->
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #2E7D32; /* أخضر داكن */
+            --primary-dark: #1B5E20;
+            --secondary: #FF6F00; /* برتقالي غامق */
+            --secondary-dark: #E65100;
+            --light: #F8F9FA;
+            --dark: #212529;
+            --earth: #5D4037;
+            --recycle: #00897B; /* تركواز للتدوير */
+            --onion: #D84315; /* لون البصل */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            color: var(--dark);
+            background-color: #f5f5f5;
+            line-height: 1.6;
+        }
+        
+        body.en {
+            font-family: 'Roboto', sans-serif;
+            direction: ltr;
+        }
+        
+        /* Header Styles */
+        .navbar {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: white !important;
+            display: flex;
+            align-items: center;
+        }
+        
+        .navbar-brand i {
+            margin-left: 10px;
+            color: var(--secondary);
+        }
+        
+        body.en .navbar-brand i {
+            margin-left: 0;
+            margin-right: 10px;
+        }
+        
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 500;
+            margin: 0 10px;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .nav-link:hover {
+            color: var(--secondary) !important;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            bottom: 0;
+            left: 0;
+            transition: width 0.3s;
+        }
+        
+        body.en .nav-link::after {
+            left: auto;
+            right: 0;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Language Switcher */
+        .lang-switcher {
+            position: relative;
+        }
+        
+        .lang-dropdown {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .lang-dropdown:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .lang-options {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            min-width: 120px;
+            display: none;
+            margin-top: 5px;
+        }
+        
+        body.en .lang-options {
+            left: auto;
+            right: 0;
+        }
+        
+        .lang-option {
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--dark);
+        }
+        
+        .lang-option:hover {
+            background: var(--light);
+            color: var(--primary);
+        }
+        
+        /* Welcome Modal */
+        .welcome-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s;
+        }
+        
+        .welcome-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .welcome-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            transform: scale(0.8);
+            transition: all 0.5s;
+        }
+        
+        .welcome-modal.active .welcome-content {
+            transform: scale(1);
+        }
+        
+        .welcome-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #999;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        body.en .welcome-close {
+            right: auto;
+            left: 15px;
+        }
+        
+        .welcome-close:hover {
+            color: var(--dark);
+            transform: rotate(90deg);
+        }
+        
+        .welcome-icon {
+            font-size: 4rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .welcome-title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--primary-dark);
+        }
+        
+        .welcome-text {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            color: #666;
+        }
+        
+        .welcome-btn {
+            background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+            border: none;
+            color: white;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .welcome-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(46, 125, 50, 0.4);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1625246333195-78d9c38ad449?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 120px 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .btn-primary-custom {
+            background: linear-gradient(45deg, var(--secondary), var(--secondary-dark));
+            border: none;
+            color: white;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 111, 0, 0.4);
+        }
+        
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 111, 0, 0.6);
+            color: white;
+        }
+        
+        /* Section Styles */
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 50px;
+            text-align: center;
+            position: relative;
+            color: var(--primary-dark);
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        
+        /* Work Plan Cards - New Design */
+        .work-plan-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .work-plan-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            width: 100%;
+            max-width: 350px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .work-plan-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .card-phase {
+            font-size: 0.9rem;
+            font-weight: 500;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+        
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 0;
+        }
+        
+        .card-icon {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 2rem;
+            opacity: 0.8;
+        }
+        
+        body.en .card-icon {
+            left: auto;
+            right: 20px;
+        }
+        
+        .card-body {
+            padding: 25px;
+        }
+        
+        .card-description {
+            margin-bottom: 20px;
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .card-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .card-list li {
+            margin-bottom: 12px;
+            padding-right: 25px;
+            position: relative;
+            color: #333;
+            line-height: 1.5;
+        }
+        
+        body.en .card-list li {
+            padding-right: 0;
+            padding-left: 25px;
+        }
+        
+        .card-list li::before {
+            content: '\f058';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 0;
+            top: 0;
+            color: var(--primary);
+            font-size: 1rem;
+        }
+        
+        body.en .card-list li::before {
+            right: auto;
+            left: 0;
+        }
+        
+        /* Services Section */
+        .service-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .service-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .service-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--primary-dark);
+        }
+        
+        /* Onion Services Section */
+        .onion-services {
+            background: linear-gradient(135deg, rgba(216, 67, 21, 0.1), rgba(255, 111, 0, 0.1));
+            border-radius: 20px;
+            padding: 50px;
+            margin: 50px 0;
+        }
+        
+        .onion-services h2 {
+            color: var(--onion);
+            font-weight: 800;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 2.2rem;
+        }
+        
+        .onion-service-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .onion-service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--onion), var(--secondary));
+        }
+        
+        .onion-service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .onion-icon {
+            font-size: 3rem;
+            color: var(--onion);
+            margin-bottom: 20px;
+        }
+        
+        .onion-service-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--onion);
+        }
+        
+        /* Interactive Platform Section */
+        .platform-section {
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            margin: 50px 0;
+        }
+        
+        .platform-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .platform-feature {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+            padding: 30px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, rgba(46, 125, 50, 0.05), rgba(0, 137, 123, 0.05));
+            transition: all 0.3s;
+        }
+        
+        .platform-feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .platform-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .platform-feature h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--primary-dark);
+        }
+        
+        /* Pricing Section */
+        .pricing-section {
+            background: linear-gradient(135deg, rgba(46, 125, 50, 0.05), rgba(0, 137, 123, 0.05));
+            border-radius: 20px;
+            padding: 50px;
+            margin: 50px 0;
+        }
+        
+        .pricing-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+        
+        .pricing-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            width: 100%;
+            max-width: 350px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .pricing-card.featured {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(46, 125, 50, 0.2);
+        }
+        
+        .pricing-card.featured::before {
+            content: 'الأكثر شيوعاً';
+            position: absolute;
+            top: 15px;
+            right: -30px;
+            background: var(--secondary);
+            color: white;
+            padding: 5px 40px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transform: rotate(45deg);
+        }
+        
+        .pricing-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .pricing-card.featured .pricing-header {
+            background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
+        }
+        
+        .pricing-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .pricing-price {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
+        
+        .pricing-period {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+        
+        .pricing-body {
+            padding: 30px;
+        }
+        
+        .pricing-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0 0 30px 0;
+        }
+        
+        .pricing-list li {
+            margin-bottom: 15px;
+            padding-right: 25px;
+            position: relative;
+            color: #333;
+        }
+        
+        body.en .pricing-list li {
+            padding-right: 0;
+            padding-left: 25px;
+        }
+        
+        .pricing-list li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 0;
+            top: 0;
+            color: var(--primary);
+            font-size: 1rem;
+        }
+        
+        body.en .pricing-list li::before {
+            right: auto;
+            left: 0;
+        }
+        
+        .pricing-btn {
+            background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+            border: none;
+            color: white;
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            transition: all 0.3s;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        .pricing-card.featured .pricing-btn {
+            background: linear-gradient(45deg, var(--secondary), var(--secondary-dark));
+        }
+        
+        .pricing-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(46, 125, 50, 0.4);
+            color: white;
+        }
+        
+        /* Process Section */
+        .process-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .process-step {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 280px;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .process-step:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--secondary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        
+        .step-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin: 20px 0;
+        }
+        
+        .step-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--primary-dark);
+        }
+        
+        /* Future Section */
+        .future {
+            background: linear-gradient(135deg, rgba(46, 125, 50, 0.1), rgba(0, 137, 123, 0.1));
+            border-radius: 20px;
+            padding: 50px;
+            margin: 50px 0;
+        }
+        
+        .future h2 {
+            color: var(--primary-dark);
+            font-weight: 800;
+            margin-bottom: 30px;
+        }
+        
+        .future ul {
+            list-style-type: none;
+            padding-right: 0;
+        }
+        
+        body.en .future ul {
+            padding-right: 0;
+            padding-left: 0;
+        }
+        
+        .future li {
+            margin-bottom: 20px;
+            padding-right: 30px;
+            position: relative;
+            font-size: 1.1rem;
+        }
+        
+        body.en .future li {
+            padding-right: 0;
+            padding-left: 30px;
+        }
+        
+        .future li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 0;
+            top: 0;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+        
+        body.en .future li::before {
+            right: auto;
+            left: 0;
+        }
+        
+        /* Contact Section */
+        .contact-form {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+        
+        .form-control, .form-select {
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.25rem rgba(46, 125, 50, 0.25);
+        }
+        
+        .whatsapp-btn {
+            background: linear-gradient(45deg, #25D366, #128C7E);
+            border: none;
+            color: white;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            transition: all 0.3s;
+            cursor: pointer;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .whatsapp-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+            color: white;
+        }
+        
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--primary-dark), var(--earth));
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-widget h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .footer-widget h3::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 3px;
+            background: var(--secondary);
+            bottom: 0;
+            right: 0;
+        }
+        
+        body.en .footer-widget h3::after {
+            right: auto;
+            left: 0;
+        }
+        
+        .footer-links {
+            list-style: none;
+            padding-right: 0;
+        }
+        
+        body.en .footer-links {
+            padding-right: 0;
+            padding-left: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+            padding-right: 5px;
+        }
+        
+        body.en .footer-links a:hover {
+            padding-right: 0;
+            padding-left: 5px;
+        }
+        
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-align: center;
+            line-height: 40px;
+            border-radius: 50%;
+            margin-left: 10px;
+            transition: all 0.3s;
+        }
+        
+        body.en .social-icons a {
+            margin-left: 0;
+            margin-right: 10px;
+        }
+        
+        .social-icons a:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 767px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .future {
+                padding: 30px 20px;
+            }
+            
+            .welcome-content {
+                padding: 30px 20px;
+            }
+            
+            .welcome-title {
+                font-size: 1.8rem;
+            }
+            
+            .work-plan-card {
+                max-width: 100%;
+            }
+            
+            .process-step {
+                max-width: 100%;
+            }
+            
+            .pricing-card {
+                max-width: 100%;
+            }
+            
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Welcome Modal -->
+    <div class="welcome-modal" id="welcomeModal">
+        <div class="welcome-content">
+            <button class="welcome-close" id="closeWelcome">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="welcome-icon">
+                <i class="fas fa-recycle"></i>
+            </div>
+            <h2 class="welcome-title" data-ar="مرحباً بك في AGRICODE" data-en="Welcome to AGRICODE">مرحباً بك في AGRICODE</h2>
+            <p class="welcome-text" data-ar="نحن نربط بين المزارعين والشركات لتدوير المخلفات الزراعية وتحويلها إلى موارد قيمة. انضم إلينا في رحلة نحو اقتصاد دائري مستدام." data-en="We connect farmers with companies to recycle agricultural waste and transform it into valuable resources. Join us on a journey towards a sustainable circular economy.">نحن نربط بين المزارعين والشركات لتدوير المخلفات الزراعية وتحويلها إلى موارد قيمة. انضم إلينا في رحلة نحو اقتصاد دائري مستدام.</p>
+            <button class="welcome-btn" id="startExploring" data-ar="ابدأ الاستكشاف" data-en="Start Exploring">ابدأ الاستكشاف</button>
+        </div>
+    </div>
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-recycle"></i>
+                <span data-ar="AGRICODE" data-en="AGRICODE">AGRICODE</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home" data-ar="الرئيسية" data-en="Home">الرئيسية</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about" data-ar="من نحن" data-en="About Us">من نحن</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#onion-services" data-ar="خدمات البصل" data-en="Onion Services">خدمات البصل</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#process" data-ar="كيفية العمل" data-en="How It Works">كيفية العمل</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services" data-ar="خدماتنا" data-en="Our Services">خدماتنا</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#pricing" data-ar="الأسعار" data-en="Pricing">الأسعار</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact" data-ar="تواصل معنا" data-en="Contact Us">تواصل معنا</a>
+                    </li>
+                    <li class="nav-item lang-switcher">
+                        <div class="lang-dropdown" id="langDropdown">
+                            <i class="fas fa-globe"></i> <span id="currentLang">العربية</span>
+                        </div>
+                        <div class="lang-options" id="langOptions">
+                            <div class="lang-option" data-lang="ar">العربية</div>
+                            <div class="lang-option" data-lang="en">English</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <h1 data-aos="fade-up" data-ar="وسيطك الموثوق في تدوير المخلفات الزراعية وخدمات البصل المتكاملة" data-en="Your Trusted Partner in Agricultural Waste Recycling and Comprehensive Onion Services">وسيطك الموثوق في تدوير المخلفات الزراعية وخدمات البصل المتكاملة</h1>
+            <p data-aos="fade-up" data-aos-delay="200" data-ar="AGRICODE - نحول المخلفات الزراعية إلى موارد قيمة ونقدم خدمات متخصصة لمحصول البصل" data-en="AGRICODE - We transform agricultural waste into valuable resources and provide specialized services for the onion crop">AGRICODE - نحول المخلفات الزراعية إلى موارد قيمة ونقدم خدمات متخصصة لمحصول البصل</p>
+            <a href="#about" class="btn btn-primary-custom" data-aos="fade-up" data-aos-delay="400" data-ar="اكتشف المزيد" data-en="Discover More">اكتشف المزيد</a>
+        </div>
+    </section>
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up" data-ar="خطة عملنا" data-en="Our Work Plan">خطة عملنا</h2>
+            
+            <div class="work-plan-container">
+                <div class="work-plan-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card-header">
+                        <div class="card-phase" data-ar="المرحلة الأولى" data-en="Phase One">المرحلة الأولى</div>
+                        <h3 class="card-title" data-ar="جمع البيانات" data-en="Data Collection">جمع البيانات</h3>
+                        <div class="card-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h4 data-ar="تحديد المخلفات الزراعية" data-en="Identifying Agricultural Waste">تحديد المخلفات الزراعية</h4>
+                        <p class="card-description" data-ar="جمع معلومات شاملة عن أنواع المخلفات الزراعية وكمياتها في المناطق المختلفة" data-en="Collecting comprehensive information about types and quantities of agricultural waste in different regions">جمع معلومات شاملة عن أنواع المخلفات الزراعية وكمياتها في المناطق المختلفة</p>
+                        <ul class="card-list">
+                            <li data-ar="تقييم أنواع المخلفات المتاحة" data-en="Evaluating available waste types">تقييم أنواع المخلفات المتاحة</li>
+                            <li data-ar="تحديد المناطق ذات الكميات الكبيرة" data-en="Identifying areas with large quantities">تحديد المناطق ذات الكميات الكبيرة</li>
+                            <li data-ar="دراسة مواسم التوافر" data-en="Studying availability seasons">دراسة مواسم التوافر</li>
+                            <li data-ar="تحليل تكاليف الجمع والنقل" data-en="Analyzing collection and transport costs">تحليل تكاليف الجمع والنقل</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="work-plan-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card-header">
+                        <div class="card-phase" data-ar="المرحلة الثانية" data-en="Phase Two">المرحلة الثانية</div>
+                        <h3 class="card-title" data-ar="بناء الشبكة" data-en="Building the Network">بناء الشبكة</h3>
+                        <div class="card-icon">
+                            <i class="fas fa-network-wired"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h4 data-ar="ربط المزارعين بالشركات" data-en="Connecting Farmers with Companies">ربط المزارعين بالشركات</h4>
+                        <p class="card-description" data-ar="إنشاء شبكة قوية تربط بين موردي المخلفات الزراعية والمشترين المحتملين" data-en="Creating a strong network connecting agricultural waste suppliers with potential buyers">إنشاء شبكة قوية تربط بين موردي المخلفات الزراعية والمشترين المحتملين</p>
+                        <ul class="card-list">
+                            <li data-ar="التواصل مع المزارعين وملاك الأراضي" data-en="Communicating with farmers and landowners">التواصل مع المزارعين وملاك الأراضي</li>
+                            <li data-ar="تحديد الشركات المهتمة بالتدوير" data-en="Identifying companies interested in recycling">تحديد الشركات المهتمة بالتدوير</li>
+                            <li data-ar="إنشاء قاعدة بيانات للموردين والمشترين" data-en="Creating a database of suppliers and buyers">إنشاء قاعدة بيانات للموردين والمشترين</li>
+                            <li data-ar="تطوير منصة إلكترونية للتواصل" data-en="Developing an online communication platform">تطوير منصة إلكترونية للتواصل</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="work-plan-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="card-header">
+                        <div class="card-phase" data-ar="المرحلة الثالثة" data-en="Phase Three">المرحلة الثالثة</div>
+                        <h3 class="card-title" data-ar="التشغيل والتوسع" data-en="Operation and Expansion">التشغيل والتوسع</h3>
+                        <div class="card-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h4 data-ar="تنفيذ عمليات التدوير" data-en="Implementing Recycling Operations">تنفيذ عمليات التدوير</h4>
+                        <p class="card-description" data-ar="بدء العمليات الفعلية لجمع وتوزيع المخلفات الزراعية والتوسع في أسواق جديدة" data-en="Starting actual operations for collecting and distributing agricultural waste and expanding into new markets">بدء العمليات الفعلية لجمع وتوزيع المخلفات الزراعية والتوسع في أسواق جديدة</p>
+                        <ul class="card-list">
+                            <li data-ar="تنفيذ أولى صفقات التوريد" data-en="Executing first supply deals">تنفيذ أولى صفقات التوريد</li>
+                            <li data-ar="تطوير نظام لوجستي فعال" data-en="Developing an efficient logistics system">تطوير نظام لوجستي فعال</li>
+                            <li data-ar="التوسع في مناطق جغرافية جديدة" data-en="Expanding to new geographical areas">التوسع في مناطق جغرافية جديدة</li>
+                            <li data-ar="استكشاف أنواع جديدة من المخلفات" data-en="Exploring new types of waste">استكشاف أنواع جديدة من المخلفات</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Onion Services Section -->
+    <section id="onion-services" class="section">
+        <div class="container">
+            <div class="onion-services">
+                <h2 data-aos="fade-up" data-ar="خدماتنا المتخصصة لمحصول البصل" data-en="Our Specialized Onion Services">خدماتنا المتخصصة لمحصول البصل</h2>
+                <p class="text-center mb-5" data-aos="fade-up" data-aos-delay="100" data-ar="نركز على تقديم خدمات متكاملة ومبتكرة لمحصول البصل الاستراتيجي" data-en="We focus on providing comprehensive and innovative services for the strategic onion crop">نركز على تقديم خدمات متكاملة ومبتكرة لمحصول البصل الاستراتيجي</p>
+                
+                <div class="row">
+                    <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+                        <div class="onion-service-card">
+                            <div class="onion-icon">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                            <h3 data-ar="متابعة المحصول" data-en="Crop Monitoring">متابعة المحصول</h3>
+                            <p data-ar="متابعة محصول البصل من خلال فريق من المهندسين الزراعيين المتخصصين طوال مراحل النمو" data-en="Monitoring the onion crop through a team of specialized agricultural engineers throughout all growth stages">متابعة محصول البصل من خلال فريق من المهندسين الزراعيين المتخصصين طوال مراحل النمو</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+                        <div class="onion-service-card">
+                            <div class="onion-icon">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <h3 data-ar="استشارات أونلاين" data-en="Online Consultations">استشارات أونلاين</h3>
+                            <p data-ar="توفير استشارات زراعية متخصصة عبر الإنترنت لحل مشكلات محصول البصل" data-en="Providing specialized agricultural consultations online to solve onion crop problems">توفير استشارات زراعية متخصصة عبر الإنترنت لحل مشكلات محصول البصل</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
+                        <div class="onion-service-card">
+                            <div class="onion-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <h3 data-ar="توعية المزارعين" data-en="Farmer Awareness">توعية المزارعين</h3>
+                            <p data-ar="برامج توعية وتدريب للمزارعين حول أفضل ممارسات زراعة البصل" data-en="Awareness and training programs for farmers on best onion cultivation practices">برامج توعية وتدريب للمزارعين حول أفضل ممارسات زراعة البصل</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="500">
+                        <div class="onion-service-card">
+                            <div class="onion-icon">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <h3 data-ar="بيانات شاملة" data-en="Comprehensive Data">بيانات شاملة</h3>
+                            <p data-ar="توفير بيانات شاملة ومحدثة عن محصول البصل بشكل احترافي" data-en="Providing comprehensive and updated data about the onion crop professionally">توفير بيانات شاملة ومحدثة عن محصول البصل بشكل احترافي</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Interactive Platform Section -->
+    <section id="platform" class="section bg-light">
+        <div class="container">
+            <div class="platform-section">
+                <h2 class="section-title" data-aos="fade-up" data-ar="منصتنا التفاعلية لمحصول البصل" data-en="Our Interactive Platform for Onion Crop">منصتنا التفاعلية لمحصول البصل</h2>
+                <p class="text-center mb-5" data-aos="fade-up" data-aos-delay="100" data-ar="منصة رقمية تفاعلية توفر جميع المعلومات والخدمات المتعلقة بمحصول البصل بطريقة سهلة وممتعة" data-en="An interactive digital platform that provides all information and services related to the onion crop in an easy and enjoyable way">منصة رقمية تفاعلية توفر جميع المعلومات والخدمات المتعلقة بمحصول البصل بطريقة سهلة وممتعة</p>
+                
+                <div class="platform-features">
+                    <div class="platform-feature" data-aos="fade-up" data-aos-delay="200">
+                        <div class="platform-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 data-ar="تحليلات في الوقت الحقيقي" data-en="Real-time Analytics">تحليلات في الوقت الحقيقي</h3>
+                        <p data-ar="متابعة أداء المحصول وتحليل البيانات الزراعية بشكل تفاعلي" data-en="Monitoring crop performance and analyzing agricultural data interactively">متابعة أداء المحصول وتحليل البيانات الزراعية بشكل تفاعلي</p>
+                    </div>
+                    
+                    <div class="platform-feature" data-aos="fade-up" data-aos-delay="300">
+                        <div class="platform-icon">
+                            <i class="fas fa-cloud-sun"></i>
+                        </div>
+                        <h3 data-ar="تنبؤات الطقس" data-en="Weather Forecasts">تنبؤات الطقس</h3>
+                        <p data-ar="توقعات جوية دقيقة مخصصة لمناطق زراعة البصل" data-en="Accurate weather forecasts customized for onion growing areas">توقعات جوية دقيقة مخصصة لمناطق زراعة البصل</p>
+                    </div>
+                    
+                    <div class="platform-feature" data-aos="fade-up" data-aos-delay="400">
+                        <div class="platform-icon">
+                            <i class="fas fa-virus"></i>
+                        </div>
+                        <h3 data-ar="كشف الأمراض" data-en="Disease Detection">كشف الأمراض</h3>
+                        <p data-ar="نظام ذني لكشف الأمراض والآفات مبكراً باستخدام الذكاء الاصطناعي" data-en="Smart system for early detection of diseases and pests using artificial intelligence">نظام ذني لكشف الأمراض والآفات مبكراً باستخدام الذكاء الاصطناعي</p>
+                    </div>
+                    
+                    <div class="platform-feature" data-aos="fade-up" data-aos-delay="500">
+                        <div class="platform-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3 data-ar="تطبيق جوال" data-en="Mobile App">تطبيق جوال</h3>
+                        <p data-ar="تطبيق جوال سهل الاستخدام للوصول لجميع خدماتنا أينما كنت" data-en="Easy-to-use mobile app to access all our services anywhere">تطبيق جوال سهل الاستخدام للوصول لجميع خدماتنا أينما كنت</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Process Section -->
+    <section id="process" class="section">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up" data-ar="كيفية عملنا" data-en="How We Work">كيفية عملنا</h2>
+            
+            <div class="process-container">
+                <div class="process-step" data-aos="fade-up" data-aos-delay="100">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3 class="step-title" data-ar="جمع المخلفات" data-en="Waste Collection">جمع المخلفات</h3>
+                    <p data-ar="نتواصل مع المزارعين لجمع المخلفات الزراعية بأنواعها المختلفة من المزارع والمصانع" data-en="We communicate with farmers to collect various types of agricultural waste from farms and factories">نتواصل مع المزارعين لجمع المخلفات الزراعية بأنواعها المختلفة من المزارع والمصانع</p>
+                </div>
+                
+                <div class="process-step" data-aos="fade-up" data-aos-delay="200">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">
+                        <i class="fas fa-sort-amount-down"></i>
+                    </div>
+                    <h3 class="step-title" data-ar="الفرز والتقييم" data-en="Sorting and Evaluation">الفرز والتقييم</h3>
+                    <p data-ar="نقوم بفرز المخلفات وتقييم جودتها وكمياتها لتحديد أفضل استخداماتها المحتملة" data-en="We sort the waste and evaluate its quality and quantities to determine its best potential uses">نقوم بفرز المخلفات وتقييم جودتها وكمياتها لتحديد أفضل استخداماتها المحتملة</p>
+                </div>
+                
+                <div class="process-step" data-aos="fade-up" data-aos-delay="300">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3 class="step-title" data-ar="ربط المشترين" data-en="Connecting Buyers">ربط المشترين</h3>
+                    <p data-ar="نبحث عن الشركات والمصانع المهتمة بشراء المخلفات وننسيق عمليات البيع والشراء" data-en="We search for companies and factories interested in buying waste and coordinate sales and purchase operations">نبحث عن الشركات والمصانع المهتمة بشراء المخلفات وننسيق عمليات البيع والشراء</p>
+                </div>
+                
+                <div class="process-step" data-aos="fade-up" data-aos-delay="400">
+                    <div class="step-number">4</div>
+                    <div class="step-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h3 class="step-title" data-ar="التوصيل والاستلام" data-en="Delivery and Receipt">التوصيل والاستلام</h3>
+                    <p data-ar="ننظم عملية نقل المخلفات من المزارع إلى الشركات المشترية ونتأكد من استلامها بشكل صحيح" data-en="We organize the transportation of waste from farms to buying companies and ensure its proper receipt">ننظم عملية نقل المخلفات من المزارع إلى الشركات المشترية ونتأكد من استلامها بشكل صحيح</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Services Section -->
+    <section id="services" class="section bg-light">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up" data-ar="خدماتنا" data-en="Our Services">خدماتنا</h2>
+            
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3 data-ar="وساطة تجارية" data-en="Commercial Brokerage">وساطة تجارية</h3>
+                        <p data-ar="نربط بين موردي المخلفات الزراعية والمشترين المهتمين ونضمن أفضل الأسعار للطرفين" data-en="We connect agricultural waste suppliers with interested buyers and ensure the best prices for both parties">نربط بين موردي المخلفات الزراعية والمشترين المهتمين ونضمن أفضل الأسعار للطرفين</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-truck-loading"></i>
+                        </div>
+                        <h3 data-ar="خدمات لوجستية" data-en="Logistics Services">خدمات لوجستية</h3>
+                        <p data-ar="ننظم عمليات جمع وتخزين ونقل المخلفات الزراعية بكفاءة عالية وتكاليف مناسبة" data-en="We organize the collection, storage, and transportation of agricultural waste with high efficiency and reasonable costs">ننظم عمليات جمع وتخزين ونقل المخلفات الزراعية بكفاءة عالية وتكاليف مناسبة</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 data-ar="استشارات السوق" data-en="Market Consulting">استشارات السوق</h3>
+                        <p data-ar="نقدم استشارات حول أفضل الأسواق للمخلفات الزراعية والفرص المتاحة في مجال التدوير" data-en="We provide consulting on the best markets for agricultural waste and available opportunities in the recycling field">نقدم استشارات حول أفضل الأسواق للمخلفات الزراعية والفرص المتاحة في مجال التدوير</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="400">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-file-contract"></i>
+                        </div>
+                        <h3 data-ar="إدارة العقود" data-en="Contract Management">إدارة العقود</h3>
+                        <p data-ar="نساعد في إعداد وإدارة العقود بين المزارعين والشركات لضمان حقوق جميع الأطراف" data-en="We assist in preparing and managing contracts between farmers and companies to ensure the rights of all parties">نساعد في إعداد وإدارة العقود بين المزارعين والشركات لضمان حقوق جميع الأطراف</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="500">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-search-dollar"></i>
+                        </div>
+                        <h3 data-ar="تقييم المخلفات" data-en="Waste Evaluation">تقييم المخلفات</h3>
+                        <p data-ar="نقوم بتقييم نوعية وكمية المخلفات الزراعية وتحديد قيمتها السوقية المحتملة" data-en="We evaluate the quality and quantity of agricultural waste and determine its potential market value">نقوم بتقييم نوعية وكمية المخلفات الزراعية وتحديد قيمتها السوقية المحتملة</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="600">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h3 data-ar="توسيع الأسواق" data-en="Market Expansion">توسيع الأسواق</h3>
+                        <p data-ar="نساعد المزارعين والشركات على الوصول إلى أسواق جديدة محلية ودولية للمخلفات الزراعية" data-en="We help farmers and companies access new local and international markets for agricultural waste">نساعد المزارعين والشركات على الوصول إلى أسواق جديدة محلية ودولية للمخلفات الزراعية</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Pricing Section -->
+    <section id="pricing" class="section">
+        <div class="container">
+            <div class="pricing-section">
+                <h2 class="section-title" data-aos="fade-up" data-ar="خطة التسعير" data-en="Pricing Plan">خطة التسعير</h2>
+                <p class="text-center mb-5" data-aos="fade-up" data-aos-delay="100" data-ar="اختر الباقة التي تناسب احتياجاتك بأسعار تنافسية وشفافة" data-en="Choose the package that suits your needs with competitive and transparent prices">اختر الباقة التي تناسب احتياجاتك بأسعار تنافسية وشفافة</p>
+                
+                <div class="pricing-cards">
+                    <div class="pricing-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="pricing-header">
+                            <h3 class="pricing-title" data-ar="الباقة الأساسية" data-en="Basic Package">الباقة الأساسية</h3>
+                            <div class="pricing-price">500</div>
+                            <div class="pricing-period" data-ar="جنيه / شهر" data-en="EGP / month">جنيه / شهر</div>
+                        </div>
+                        <div class="pricing-body">
+                            <ul class="pricing-list">
+                                <li data-ar="استشارات زراعية محدودة" data-en="Limited agricultural consultations">استشارات زراعية محدودة</li>
+                                <li data-ar="وصول لبيانات أساسية" data-en="Access to basic data">وصول لبيانات أساسية</li>
+                                <li data-ar="وساطة في صفقة واحدة شهرياً" data-en="Brokerage in one deal per month">وساطة في صفقة واحدة شهرياً</li>
+                                <li data-ar="دعم عبر البريد الإلكتروني" data-en="Email support">دعم عبر البريد الإلكتروني</li>
+                            </ul>
+                            <button class="pricing-btn" data-ar="اختر الباقة" data-en="Choose Package">اختر الباقة</button>
+                        </div>
+                    </div>
+                    
+                    <div class="pricing-card featured" data-aos="fade-up" data-aos-delay="300">
+                        <div class="pricing-header">
+                            <h3 class="pricing-title" data-ar="الباقة الاحترافية" data-en="Professional Package">الباقة الاحترافية</h3>
+                            <div class="pricing-price">1500</div>
+                            <div class="pricing-period" data-ar="جنيه / شهر" data-en="EGP / month">جنيه / شهر</div>
+                        </div>
+                        <div class="pricing-body">
+                            <ul class="pricing-list">
+                                <li data-ar="استشارات زراعية غير محدودة" data-en="Unlimited agricultural consultations">استشارات زراعية غير محدودة</li>
+                                <li data-ar="وصول كامل لقاعدة البيانات" data-en="Full access to database">وصول كامل لقاعدة البيانات</li>
+                                <li data-ar="وساطة في 5 صفقات شهرياً" data-en="Brokerage in 5 deals per month">وساطة في 5 صفقات شهرياً</li>
+                                <li data-ar="متابعة المحصول الأساسية" data-en="Basic crop monitoring">متابعة المحصول الأساسية</li>
+                                <li data-ar="دعم عبر الهاتف والبريد" data-en="Phone and email support">دعم عبر الهاتف والبريد</li>
+                            </ul>
+                            <button class="pricing-btn" data-ar="اختر الباقة" data-en="Choose Package">اختر الباقة</button>
+                        </div>
+                    </div>
+                    
+                    <div class="pricing-card" data-aos="fade-up" data-aos-delay="400">
+                        <div class="pricing-header">
+                            <h3 class="pricing-title" data-ar="الباقة المميزة" data-en="Premium Package">الباقة المميزة</h3>
+                            <div class="pricing-price">3000</div>
+                            <div class="pricing-period" data-ar="جنيه / شهر" data-en="EGP / month">جنيه / شهر</div>
+                        </div>
+                        <div class="pricing-body">
+                            <ul class="pricing-list">
+                                <li data-ar="جميع مزايا الباقة الاحترافية" data-en="All Professional Package features">جميع مزايا الباقة الاحترافية</li>
+                                <li data-ar="وساطة غير محدودة" data-en="Unlimited brokerage">وساطة غير محدودة</li>
+                                <li data-ar="متابعة المحصول المتقدمة" data-en="Advanced crop monitoring">متابعة المحصول المتقدمة</li>
+                                <li data-ar="خدمات لوجستية متميزة" data-en="Premium logistics services">خدمات لوجستية متميزة</li>
+                                <li data-ar="مدير حساب مخصص" data-en="Dedicated account manager">مدير حساب مخصص</li>
+                                <li data-ar="تقارير تحليلية شهرية" data-en="Monthly analytical reports">تقارير تحليلية شهرية</li>
+                            </ul>
+                            <button class="pricing-btn" data-ar="اختر الباقة" data-en="Choose Package">اختر الباقة</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Future Section -->
+    <section id="future" class="section">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up" data-ar="رؤيتنا المستقبلية" data-en="Our Future Vision">رؤيتنا المستقبلية</h2>
+            
+            <div class="future" data-aos="fade-up" data-aos-delay="200">
+                <h2 data-ar="أهدافنا الاستراتيجية" data-en="Our Strategic Goals">أهدافنا الاستراتيجية</h2>
+                <ul>
+                    <li data-ar="بناء أكبر شبكة لتبادل المخلفات الزراعية في المنطقة" data-en="Building the largest network for exchanging agricultural waste in the region">بناء أكبر شبكة لتبادل المخلفات الزراعية في المنطقة</li>
+                    <li data-ar="تطوير منصة رقمية متكاملة لإدارة عمليات التدوير" data-en="Developing an integrated digital platform for managing recycling operations">تطوير منصة رقمية متكاملة لإدارة عمليات التدوير</li>
+                    <li data-ar="توسيع نطاق عملنا ليشمل دول عربية وأفريقية" data-en="Expanding our scope to include Arab and African countries">توسيع نطاق عملنا ليشمل دول عربية وأفريقية</li>
+                    <li data-ar="المساهمة في تحقيق أهداف التنمية المستدامة" data-en="Contributing to achieving sustainable development goals">المساهمة في تحقيق أهداف التنمية المستدامة</li>
+                    <li data-ar="خلق فرص عمل جديدة في مجال الاقتصاد الدائري" data-en="Creating new job opportunities in the circular economy field">خلق فرص عمل جديدة في مجال الاقتصاد الدائري</li>
+                </ul>
+                
+                <h2 class="mt-5" data-ar="ابتكاراتنا في محصول البصل" data-en="Our Innovations in Onion Crop">ابتكاراتنا في محصول البصل</h2>
+                <p data-ar="نسعى للابتكار المستمر في مجال محصول البصل من خلال:" data-en="We strive for continuous innovation in the onion crop field through:">نسعى للابتكار المستمر في مجال محصول البصل من خلال:</p>
+                <ul>
+                    <li data-ar="تطوير أصناف جديدة مقاومة للأمراض" data-en="Developing new disease-resistant varieties">تطوير أصناف جديدة مقاومة للأمراض</li>
+                    <li data-ar="ابتكار طرق ري ذكية وموفرة للمياه" data-en="Innovating smart and water-saving irrigation methods">ابتكار طرق ري ذكية وموفرة للمياه</li>
+                    <li data-ar="تطوير أسمدة عضوية متخصصة" data-en="Developing specialized organic fertilizers">تطوير أسمدة عضوية متخصصة</li>
+                    <li data-ar="بناء قاعدة بيانات شاملة للمحصول" data-en="Building a comprehensive database for the crop">بناء قاعدة بيانات شاملة للمحصول</li>
+                    <li data-ar="تطوير حلول لإعادة تدوير مخلفات البصل" data-en="Developing solutions for recycling onion waste">تطوير حلول لإعادة تدوير مخلفات البصل</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <!-- Contact Section -->
+    <section id="contact" class="section bg-light">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up" data-ar="تواصل معنا" data-en="Contact Us">تواصل معنا</h2>
+            
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="contact-form" data-aos="fade-up" data-aos-delay="200">
+                        <form id="contactForm">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" id="fullName" data-ar-placeholder="الاسم الكامل" data-en-placeholder="Full Name" placeholder="الاسم الكامل" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="email" class="form-control" id="email" data-ar-placeholder="البريد الإلكتروني" data-en-placeholder="Email Address" placeholder="البريد الإلكتروني" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="tel" class="form-control" id="phone" data-ar-placeholder="رقم الهاتف" data-en-placeholder="Phone Number" placeholder="رقم الهاتف" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <select class="form-select" id="inquiryType" required>
+                                        <option value="" selected data-ar="نوع الاستفسار" data-en="Inquiry Type">نوع الاستفسار</option>
+                                        <option value="farmer" data-ar="مزارع لديه مخلفات" data-en="Farmer with Waste">مزارع لديه مخلفات</option>
+                                        <option value="company" data-ar="شركة تبحث عن مخلفات" data-en="Company Looking for Waste">شركة تبحث عن مخلفات</option>
+                                        <option value="onion" data-ar="خدمات البصل" data-en="Onion Services">خدمات البصل</option>
+                                        <option value="partnership" data-ar="شراكة تجارية" data-en="Business Partnership">شراكة تجارية</option>
+                                        <option value="consulting" data-ar="استشارات" data-en="Consulting">استشارات</option>
+                                        <option value="other" data-ar="أخرى" data-en="Other">أخرى</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <textarea class="form-control" id="message" rows="5" data-ar-placeholder="رسالتك" data-en-placeholder="Your Message" placeholder="رسالتك" required></textarea>
+                            <button type="submit" class="whatsapp-btn" data-ar="إرسال الرسالة عبر واتساب" data-en="Send Message via WhatsApp">
+                                <i class="fab fa-whatsapp"></i>
+                                <span data-ar="إرسال الرسالة عبر واتساب" data-en="Send Message via WhatsApp">إرسال الرسالة عبر واتساب</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="footer-widget">
+                        <h3 data-ar="AGRICODE" data-en="AGRICODE">AGRICODE</h3>
+                        <p data-ar="نحن وسيطك الموثوق في تدوير المخلفات الزراعية، ونقدم خدمات متخصصة لمحصول البصل. نربط بين المزارعين والشركات لتحويل المخلفات إلى موارد قيمة والمساهمة في اقتصاد دائري مستدام." data-en="We are your trusted partner in agricultural waste recycling and provide specialized services for the onion crop. We connect farmers with companies to transform waste into valuable resources and contribute to a sustainable circular economy.">نحن وسيطك الموثوق في تدوير المخلفات الزراعية، ونقدم خدمات متخصصة لمحصول البصل. نربط بين المزارعين والشركات لتحويل المخلفات إلى موارد قيمة والمساهمة في اقتصاد دائري مستدام.</p>
+                        <div class="social-icons mt-3">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-tiktok"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 mb-4">
+                    <div class="footer-widget">
+                        <h3 data-ar="روابط سريعة" data-en="Quick Links">روابط سريعة</h3>
+                        <ul class="footer-links">
+                            <li><a href="#home" data-ar="الرئيسية" data-en="Home">الرئيسية</a></li>
+                            <li><a href="#about" data-ar="من نحن" data-en="About Us">من نحن</a></li>
+                            <li><a href="#onion-services" data-ar="خدمات البصل" data-en="Onion Services">خدمات البصل</a></li>
+                            <li><a href="#process" data-ar="كيفية العمل" data-en="How It Works">كيفية العمل</a></li>
+                            <li><a href="#services" data-ar="خدماتنا" data-en="Our Services">خدماتنا</a></li>
+                            <li><a href="#pricing" data-ar="الأسعار" data-en="Pricing">الأسعار</a></li>
+                            <li><a href="#contact" data-ar="تواصل معنا" data-en="Contact Us">تواصل معنا</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 mb-4">
+                    <div class="footer-widget">
+                        <h3 data-ar="معلومات التواصل" data-en="Contact Information">معلومات التواصل</h3>
+                        <ul class="footer-links">
+                            <li><i class="fas fa-map-marker-alt ms-2"></i> <span data-ar="القاهرة، مصر" data-en="Cairo, Egypt">القاهرة، مصر</span></li>
+                            <li><i class="fas fa-phone ms-2"></i> <span data-ar="+20 150 102 1670" data-en="+20 150 102 1670">+20 150 102 1670</span></li>
+                            <li><i class="fas fa-envelope ms-2"></i> <span data-ar="info@agricode.com" data-en="info@agricode.com">info@agricode.com</span></li>
+                            <li><i class="fas fa-clock ms-2"></i> <span data-ar="السبت - الخميس: 9AM - 5PM" data-en="Saturday - Thursday: 9AM - 5PM">السبت - الخميس: 9AM - 5PM</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p data-ar="&copy; 2025 AGRICODE. جميع الحقوق محفوظة." data-en="&copy; 2025 AGRICODE. All Rights Reserved.">&copy; 2025 AGRICODE. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+    <!-- Scripts -->
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS Animation -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true,
+            easing: 'ease-out'
+        });
+        
+        // Language switching functionality
+        const langDropdown = document.getElementById('langDropdown');
+        const langOptions = document.getElementById('langOptions');
+        const currentLangSpan = document.getElementById('currentLang');
+        
+        langDropdown.addEventListener('click', () => {
+            langOptions.style.display = langOptions.style.display === 'block' ? 'none' : 'block';
+        });
+        
+        // Close language options when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!langDropdown.contains(e.target)) {
+                langOptions.style.display = 'none';
+            }
+        });
+        
+        // Language option click
+        document.querySelectorAll('.lang-option').forEach(option => {
+            option.addEventListener('click', () => {
+                const selectedLang = option.getAttribute('data-lang');
+                changeLanguage(selectedLang);
+                langOptions.style.display = 'none';
+            });
+        });
+        
+        // Change language function
+        function changeLanguage(lang) {
+            // Update current language display
+            currentLangSpan.textContent = lang === 'ar' ? 'العربية' : 'English';
+            
+            // Update HTML attributes
+            document.documentElement.lang = lang;
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            
+            // Update body class
+            if (lang === 'en') {
+                document.body.classList.add('en');
+            } else {
+                document.body.classList.remove('en');
+            }
+            
+            // Update all translatable elements
+            document.querySelectorAll('[data-ar]').forEach(element => {
+                if (lang === 'ar') {
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                        element.placeholder = element.getAttribute('data-ar');
+                    } else {
+                        element.textContent = element.getAttribute('data-ar');
+                    }
+                } else {
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                        element.placeholder = element.getAttribute('data-en');
+                    } else {
+                        element.textContent = element.getAttribute('data-en');
+                    }
+                }
+            });
+            
+            // Update select options
+            document.querySelectorAll('select option').forEach(option => {
+                if (option.hasAttribute('data-ar')) {
+                    option.textContent = lang === 'ar' ? option.getAttribute('data-ar') : option.getAttribute('data-en');
+                }
+            });
+            
+            // Save language preference
+            localStorage.setItem('preferredLanguage', lang);
+        }
+        
+        // Load saved language preference
+        const savedLang = localStorage.getItem('preferredLanguage');
+        if (savedLang) {
+            changeLanguage(savedLang);
+        }
+        
+        // Welcome modal functionality
+        const welcomeModal = document.getElementById('welcomeModal');
+        const closeWelcome = document.getElementById('closeWelcome');
+        const startExploring = document.getElementById('startExploring');
+        
+        // Check if user has visited before
+        const hasVisited = localStorage.getItem('hasVisitedAgricode');
+        
+        if (!hasVisited) {
+            // Show welcome modal after a short delay
+            setTimeout(() => {
+                welcomeModal.classList.add('active');
+            }, 1000);
+        }
+        
+        // Close welcome modal
+        function closeWelcomeModal() {
+            welcomeModal.classList.remove('active');
+            localStorage.setItem('hasVisitedAgricode', 'true');
+        }
+        
+        closeWelcome.addEventListener('click', closeWelcomeModal);
+        startExploring.addEventListener('click', closeWelcomeModal);
+        
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // WhatsApp form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const inquiryType = document.getElementById('inquiryType');
+            const inquiryTypeText = inquiryType.options[inquiryType.selectedIndex].text;
+            const message = document.getElementById('message').value;
+            
+            // Get current language
+            const currentLang = document.documentElement.lang;
+            
+            // Create message based on language
+            let whatsappMessage;
+            if (currentLang === 'ar') {
+                whatsappMessage = `♻️ *رسالة جديدة من موقع AGRICODE* ♻️%0A%0A`;
+                whatsappMessage += `━━━━━━━━━━━━━━━━━━━━━%0A%0A`;
+                whatsappMessage += `👤 *الاسم الكامل:* ${fullName}%0A`;
+                whatsappMessage += `📧 *البريد الإلكتروني:* ${email}%0A`;
+                whatsappMessage += `📱 *رقم الهاتف:* ${phone}%0A`;
+                whatsappMessage += `📋 *نوع الاستفسار:* ${inquiryTypeText}%0A`;
+                whatsappMessage += `%0A💬 *الرسالة:*%0A${message}%0A%0A`;
+                whatsappMessage += `━━━━━━━━━━━━━━━━━━━━━%0A%0A`;
+                whatsappMessage += `🌐 *تم الإرسال عبر الموقع الرسمي لـ AGRICODE*%0A`;
+                whatsappMessage += `📅 *تاريخ الإرسال:* ${new Date().toLocaleDateString('ar-EG')}`;
+            } else {
+                whatsappMessage = `♻️ *New message from AGRICODE website* ♻️%0A%0A`;
+                whatsappMessage += `━━━━━━━━━━━━━━━━━━━━━%0A%0A`;
+                whatsappMessage += `👤 *Full Name:* ${fullName}%0A`;
+                whatsappMessage += `📧 *Email:* ${email}%0A`;
+                whatsappMessage += `📱 *Phone:* ${phone}%0A`;
+                whatsappMessage += `📋 *Inquiry Type:* ${inquiryTypeText}%0A`;
+                whatsappMessage += `%0A💬 *Message:*%0A${message}%0A%0A`;
+                whatsappMessage += `━━━━━━━━━━━━━━━━━━━━━%0A%0A`;
+                whatsappMessage += `🌐 *Sent via AGRICODE official website*%0A`;
+                whatsappMessage += `📅 *Sent on:* ${new Date().toLocaleDateString('en-US')}`;
+            }
+            
+            // Create WhatsApp URL
+            const whatsappUrl = `https://wa.me/201501021670?text=${encodeURIComponent(whatsappMessage)}`;
+            
+            // Open WhatsApp
+            window.open(whatsappUrl, '_blank');
+            
+            // Reset form
+            this.reset();
+        });
+    </script>
+</body>
+</html>
