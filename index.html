@@ -3,29 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AGRICODE - حلول تدوير المخلفات الزراعية وخدمات البصل المتكاملة</title>
+    <title>AGRICODE - ثورة في التكنولوجيا الزراعية</title>
     
-    <!-- مكتبات خارجية -->
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <!-- AOS Animation -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --primary: #2E7D32; /* أخضر داكن */
-            --primary-dark: #1B5E20;
-            --secondary: #FF6F00; /* برتقالي غامق */
-            --secondary-dark: #E65100;
-            --light: #F8F9FA;
-            --dark: #212529;
-            --earth: #5D4037;
-            --recycle: #00897B; /* تركواز للتدوير */
-            --onion: #D84315; /* لون البصل */
+            --primary: #2E8B57;
+            --secondary: #FF8C00;
+            --dark: #1A202C;
+            --light: #F7FAFC;
+            --accent: #38B2AC;
         }
         
         * {
@@ -36,417 +35,105 @@
         
         body {
             font-family: 'Tajawal', sans-serif;
+            background-color: var(--light);
             color: var(--dark);
-            background-color: #f5f5f5;
-            line-height: 1.6;
+            overflow-x: hidden;
         }
         
-        body.en {
+        .english {
             font-family: 'Roboto', sans-serif;
             direction: ltr;
         }
         
-        /* Header Styles */
-        .navbar {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            padding: 1rem 0;
-        }
-        
-        .navbar-brand {
-            font-weight: 700;
-            font-size: 1.8rem;
-            color: white !important;
-            display: flex;
-            align-items: center;
-        }
-        
-        .navbar-brand i {
-            margin-left: 10px;
-            color: var(--secondary);
-        }
-        
-        body.en .navbar-brand i {
-            margin-left: 0;
-            margin-right: 10px;
-        }
-        
-        .nav-link {
-            color: rgba(255, 255, 255, 0.9) !important;
-            font-weight: 500;
-            margin: 0 10px;
-            transition: all 0.3s;
-            position: relative;
-        }
-        
-        .nav-link:hover {
-            color: var(--secondary) !important;
-        }
-        
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            background: var(--secondary);
-            bottom: 0;
-            left: 0;
-            transition: width 0.3s;
-        }
-        
-        body.en .nav-link::after {
-            left: auto;
-            right: 0;
-        }
-        
-        .nav-link:hover::after {
-            width: 100%;
-        }
-        
-        /* Language Switcher */
-        .lang-switcher {
-            position: relative;
-        }
-        
-        .lang-dropdown {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: 500;
-        }
-        
-        .lang-dropdown:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-        
-        .lang-options {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            min-width: 120px;
-            display: none;
-            margin-top: 5px;
-        }
-        
-        body.en .lang-options {
-            left: auto;
-            right: 0;
-        }
-        
-        .lang-option {
-            padding: 10px 15px;
-            cursor: pointer;
-            transition: all 0.2s;
-            color: var(--dark);
-        }
-        
-        .lang-option:hover {
-            background: var(--light);
-            color: var(--primary);
-        }
-        
-        /* Welcome Modal */
-        .welcome-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.5s;
-        }
-        
-        .welcome-modal.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        .welcome-content {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 600px;
-            width: 90%;
-            text-align: center;
-            position: relative;
-            transform: scale(0.8);
-            transition: all 0.5s;
-        }
-        
-        .welcome-modal.active .welcome-content {
-            transform: scale(1);
-        }
-        
-        .welcome-close {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: #999;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        body.en .welcome-close {
-            right: auto;
-            left: 15px;
-        }
-        
-        .welcome-close:hover {
-            color: var(--dark);
-            transform: rotate(90deg);
-        }
-        
-        .welcome-icon {
-            font-size: 4rem;
-            color: var(--primary);
-            margin-bottom: 20px;
-        }
-        
-        .welcome-title {
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-            color: var(--primary-dark);
-        }
-        
-        .welcome-text {
-            font-size: 1.1rem;
-            margin-bottom: 30px;
-            color: #666;
-        }
-        
-        .welcome-btn {
-            background: linear-gradient(45deg, var(--primary), var(--primary-dark));
-            border: none;
-            color: white;
-            padding: 12px 30px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            border-radius: 50px;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-        
-        .welcome-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(46, 125, 50, 0.4);
-        }
-        
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1625246333195-78d9c38ad449?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(46, 139, 87, 0.9), rgba(56, 178, 172, 0.8)), url('https://images.unsplash.com/photo-1464226184884-fa280b87c399?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
             background-size: cover;
             background-position: center;
-            color: white;
-            padding: 120px 0;
-            text-align: center;
+            background-attachment: fixed;
         }
         
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        .section-padding {
+            padding: 80px 0;
         }
         
-        .hero p {
-            font-size: 1.5rem;
-            margin-bottom: 30px;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
+        .card-hover {
+            transition: all 0.3s ease;
         }
         
-        .btn-primary-custom {
-            background: linear-gradient(45deg, var(--secondary), var(--secondary-dark));
-            border: none;
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
             color: white;
             padding: 12px 30px;
-            font-size: 1.1rem;
-            font-weight: 700;
             border-radius: 50px;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(255, 111, 0, 0.4);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
         }
         
-        .btn-primary-custom:hover {
+        .btn-primary:hover {
+            background-color: #1E6B47;
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(255, 111, 0, 0.6);
-            color: white;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
         
-        /* Section Styles */
-        .section {
-            padding: 80px 0;
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #CC7000;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
         
         .section-title {
             font-size: 2.5rem;
             font-weight: 800;
-            margin-bottom: 50px;
-            text-align: center;
+            margin-bottom: 20px;
+            color: var(--primary);
             position: relative;
-            color: var(--primary-dark);
+            display: inline-block;
         }
         
         .section-title::after {
             content: '';
             position: absolute;
-            width: 100px;
+            bottom: -10px;
+            right: 0;
+            width: 80px;
             height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
+            background-color: var(--secondary);
             border-radius: 2px;
         }
         
-        /* Work Plan Cards - New Design */
-        .work-plan-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-            justify-content: center;
-            margin-top: 20px;
-        }
-        
-        .work-plan-card {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            overflow: hidden;
-            width: 100%;
-            max-width: 350px;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        
-        .work-plan-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-        }
-        
-        .card-header {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            padding: 20px;
-            position: relative;
-        }
-        
-        .card-phase {
-            font-size: 0.9rem;
-            font-weight: 500;
-            opacity: 0.9;
-            margin-bottom: 5px;
-        }
-        
-        .card-title {
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin: 0;
-        }
-        
-        .card-icon {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            font-size: 2rem;
-            opacity: 0.8;
-        }
-        
-        body.en .card-icon {
-            left: auto;
-            right: 20px;
-        }
-        
-        .card-body {
-            padding: 25px;
-        }
-        
-        .card-description {
-            margin-bottom: 20px;
-            color: #555;
-            line-height: 1.6;
-        }
-        
-        .card-list {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .card-list li {
-            margin-bottom: 12px;
-            padding-right: 25px;
-            position: relative;
-            color: #333;
-            line-height: 1.5;
-        }
-        
-        body.en .card-list li {
-            padding-right: 0;
-            padding-left: 25px;
-        }
-        
-        .card-list li::before {
-            content: '\f058';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            position: absolute;
-            right: 0;
-            top: 0;
-            color: var(--primary);
-            font-size: 1rem;
-        }
-        
-        body.en .card-list li::before {
-            right: auto;
+        .english .section-title::after {
             left: 0;
+            right: auto;
         }
         
-        /* Services Section */
         .service-card {
             background: white;
             border-radius: 15px;
-            padding: 30px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s;
-            height: 100%;
-            position: relative;
             overflow: hidden;
-        }
-        
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            height: 100%;
         }
         
         .service-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
         
         .service-icon {
@@ -455,454 +142,293 @@
             margin-bottom: 20px;
         }
         
-        .service-card h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-            color: var(--primary-dark);
-        }
-        
-        /* Onion Services Section */
-        .onion-services {
-            background: linear-gradient(135deg, rgba(216, 67, 21, 0.1), rgba(255, 111, 0, 0.1));
-            border-radius: 20px;
-            padding: 50px;
-            margin: 50px 0;
-        }
-        
-        .onion-services h2 {
-            color: var(--onion);
-            font-weight: 800;
-            margin-bottom: 30px;
-            text-align: center;
-            font-size: 2.2rem;
-        }
-        
-        .onion-service-card {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s;
-            height: 100%;
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 30px;
-        }
-        
-        .onion-service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--onion), var(--secondary));
-        }
-        
-        .onion-service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-        }
-        
-        .onion-icon {
-            font-size: 3rem;
-            color: var(--onion);
-            margin-bottom: 20px;
-        }
-        
-        .onion-service-card h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-            color: var(--onion);
-        }
-        
-        /* Interactive Platform Section */
-        .platform-section {
-            background: white;
-            border-radius: 20px;
-            padding: 50px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-            margin: 50px 0;
-        }
-        
-        .platform-features {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-            margin-top: 40px;
-        }
-        
-        .platform-feature {
-            flex: 1;
-            min-width: 250px;
-            text-align: center;
-            padding: 30px;
-            border-radius: 15px;
-            background: linear-gradient(135deg, rgba(46, 125, 50, 0.05), rgba(0, 137, 123, 0.05));
-            transition: all 0.3s;
-        }
-        
-        .platform-feature:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-        
-        .platform-icon {
-            font-size: 3rem;
-            color: var(--primary);
-            margin-bottom: 20px;
-        }
-        
-        .platform-feature h3 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-            color: var(--primary-dark);
-        }
-        
-        /* Pricing Section */
-        .pricing-section {
-            background: linear-gradient(135deg, rgba(46, 125, 50, 0.05), rgba(0, 137, 123, 0.05));
-            border-radius: 20px;
-            padding: 50px;
-            margin: 50px 0;
-        }
-        
-        .pricing-cards {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-            justify-content: center;
-            margin-top: 40px;
-        }
-        
         .pricing-card {
             background: white;
             border-radius: 15px;
             overflow: hidden;
-            width: 100%;
-            max-width: 350px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            height: 100%;
             position: relative;
+        }
+        
+        .pricing-card.featured {
+            border: 3px solid var(--secondary);
+            transform: scale(1.05);
         }
         
         .pricing-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
         
-        .pricing-card.featured {
-            transform: scale(1.05);
-            box-shadow: 0 15px 40px rgba(46, 125, 50, 0.2);
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-10px);
         }
         
-        .pricing-card.featured::before {
-            content: 'الأكثر شيوعاً';
+        .badge {
             position: absolute;
-            top: 15px;
+            top: 20px;
             right: -30px;
             background: var(--secondary);
             color: white;
             padding: 5px 40px;
             font-weight: 700;
-            font-size: 0.9rem;
             transform: rotate(45deg);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
         
-        .pricing-header {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            padding: 30px;
-            text-align: center;
-        }
-        
-        .pricing-card.featured .pricing-header {
-            background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
-        }
-        
-        .pricing-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-        
-        .pricing-price {
-            font-size: 2.5rem;
-            font-weight: 900;
-            margin-bottom: 10px;
-        }
-        
-        .pricing-period {
-            font-size: 1rem;
-            opacity: 0.8;
-        }
-        
-        .pricing-body {
-            padding: 30px;
-        }
-        
-        .pricing-list {
-            list-style-type: none;
-            padding: 0;
-            margin: 0 0 30px 0;
-        }
-        
-        .pricing-list li {
-            margin-bottom: 15px;
-            padding-right: 25px;
-            position: relative;
-            color: #333;
-        }
-        
-        body.en .pricing-list li {
-            padding-right: 0;
-            padding-left: 25px;
-        }
-        
-        .pricing-list li::before {
-            content: '\f00c';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            position: absolute;
-            right: 0;
-            top: 0;
-            color: var(--primary);
-            font-size: 1rem;
-        }
-        
-        body.en .pricing-list li::before {
+        .english .badge {
+            left: -30px;
             right: auto;
-            left: 0;
+            transform: rotate(-45deg);
         }
         
-        .pricing-btn {
-            background: linear-gradient(45deg, var(--primary), var(--primary-dark));
-            border: none;
-            color: white;
-            padding: 12px 30px;
-            font-size: 1rem;
-            font-weight: 700;
-            border-radius: 50px;
-            transition: all 0.3s;
-            cursor: pointer;
-            width: 100%;
-        }
-        
-        .pricing-card.featured .pricing-btn {
-            background: linear-gradient(45deg, var(--secondary), var(--secondary-dark));
-        }
-        
-        .pricing-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(46, 125, 50, 0.4);
-            color: white;
-        }
-        
-        /* Process Section */
-        .process-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 30px;
-        }
-        
-        .process-step {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            width: 100%;
-            max-width: 280px;
+        .timeline {
             position: relative;
-            transition: all 0.3s;
+            padding: 20px 0;
         }
         
-        .process-step:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-        }
-        
-        .step-number {
+        .timeline::before {
+            content: '';
             position: absolute;
-            top: -15px;
+            top: 0;
+            right: 50%;
+            width: 4px;
+            height: 100%;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+        
+        .english .timeline::before {
             left: 50%;
-            transform: translateX(-50%);
-            background: var(--secondary);
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.2rem;
+            right: auto;
         }
         
-        .step-icon {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin: 20px 0;
-        }
-        
-        .step-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-            color: var(--primary-dark);
-        }
-        
-        /* Future Section */
-        .future {
-            background: linear-gradient(135deg, rgba(46, 125, 50, 0.1), rgba(0, 137, 123, 0.1));
-            border-radius: 20px;
-            padding: 50px;
-            margin: 50px 0;
-        }
-        
-        .future h2 {
-            color: var(--primary-dark);
-            font-weight: 800;
-            margin-bottom: 30px;
-        }
-        
-        .future ul {
-            list-style-type: none;
-            padding-right: 0;
-        }
-        
-        body.en .future ul {
-            padding-right: 0;
-            padding-left: 0;
-        }
-        
-        .future li {
-            margin-bottom: 20px;
-            padding-right: 30px;
+        .timeline-item {
             position: relative;
-            font-size: 1.1rem;
+            margin-bottom: 50px;
+            width: 50%;
+            padding: 0 30px;
         }
         
-        body.en .future li {
-            padding-right: 0;
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            text-align: right;
+            padding-right: 50px;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            text-align: left;
+            padding-left: 50px;
+        }
+        
+        .english .timeline-item:nth-child(odd) {
+            left: 0;
+            text-align: left;
+            padding-left: 50px;
+            padding-right: 30px;
+        }
+        
+        .english .timeline-item:nth-child(even) {
+            left: 50%;
+            text-align: right;
+            padding-right: 50px;
             padding-left: 30px;
         }
         
-        .future li::before {
-            content: '\f00c';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
+        .timeline-dot {
             position: absolute;
-            right: 0;
             top: 0;
-            color: var(--primary);
-            font-size: 1.2rem;
+            width: 20px;
+            height: 20px;
+            background: var(--secondary);
+            border-radius: 50%;
+            box-shadow: 0 0 0 5px rgba(255, 140, 0, 0.3);
         }
         
-        body.en .future li::before {
+        .timeline-item:nth-child(odd) .timeline-dot {
+            right: -10px;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-dot {
+            left: -10px;
+        }
+        
+        .english .timeline-item:nth-child(odd) .timeline-dot {
+            left: -10px;
             right: auto;
-            left: 0;
         }
         
-        /* Contact Section */
-        .contact-form {
+        .english .timeline-item:nth-child(even) .timeline-dot {
+            right: -10px;
+            left: auto;
+        }
+        
+        .timeline-content {
             background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-        }
-        
-        .form-control, .form-select {
+            padding: 20px;
             border-radius: 10px;
-            border: 1px solid #ddd;
-            padding: 12px 15px;
-            font-size: 1rem;
-            margin-bottom: 20px;
-            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         
-        .form-control:focus, .form-select:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 0.25rem rgba(46, 125, 50, 0.25);
+        .swot-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
         }
         
-        .whatsapp-btn {
-            background: linear-gradient(45deg, #25D366, #128C7E);
-            border: none;
-            color: white;
-            padding: 12px 30px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            border-radius: 50px;
-            transition: all 0.3s;
-            cursor: pointer;
-            width: 100%;
+        .swot-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            height: 100%;
+        }
+        
+        .swot-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 10px;
         }
         
-        .whatsapp-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+        .swot-card h3 i {
+            margin-left: 10px;
+        }
+        
+        .english .swot-card h3 i {
+            margin-left: 0;
+            margin-right: 10px;
+        }
+        
+        .strengths {
+            border-top: 5px solid #2E8B57;
+        }
+        
+        .strengths h3 {
+            color: #2E8B57;
+        }
+        
+        .weaknesses {
+            border-top: 5px solid #E53E3E;
+        }
+        
+        .weaknesses h3 {
+            color: #E53E3E;
+        }
+        
+        .opportunities {
+            border-top: 5px solid #3182CE;
+        }
+        
+        .opportunities h3 {
+            color: #3182CE;
+        }
+        
+        .threats {
+            border-top: 5px solid #DD6B20;
+        }
+        
+        .threats h3 {
+            color: #DD6B20;
+        }
+        
+        .persona-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .persona-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .persona-header {
+            background: var(--primary);
             color: white;
+            padding: 20px;
+            text-align: center;
         }
         
-        /* Footer */
-        footer {
-            background: linear-gradient(135deg, var(--primary-dark), var(--earth));
+        .persona-body {
+            padding: 20px;
+        }
+        
+        .empathy-map {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .empathy-map h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .empathy-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .empathy-item {
+            background: #F7FAFC;
+            border-radius: 10px;
+            padding: 15px;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .empathy-item h4 {
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+        
+        .contract-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            border-left: 5px solid var(--primary);
+        }
+        
+        .contract-card h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .footer {
+            background: var(--dark);
             color: white;
             padding: 50px 0 20px;
         }
         
         .footer-widget h3 {
             font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 25px;
-            position: relative;
-            padding-bottom: 15px;
-        }
-        
-        .footer-widget h3::after {
-            content: '';
-            position: absolute;
-            width: 50px;
-            height: 3px;
-            background: var(--secondary);
-            bottom: 0;
-            right: 0;
-        }
-        
-        body.en .footer-widget h3::after {
-            right: auto;
-            left: 0;
+            margin-bottom: 20px;
+            color: var(--secondary);
         }
         
         .footer-links {
             list-style: none;
-            padding-right: 0;
-        }
-        
-        body.en .footer-links {
-            padding-right: 0;
-            padding-left: 0;
         }
         
         .footer-links li {
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
         
         .footer-links a {
-            color: rgba(255, 255, 255, 0.8);
+            color: #CBD5E0;
             text-decoration: none;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
         }
         
         .footer-links a:hover {
@@ -910,7 +436,7 @@
             padding-right: 5px;
         }
         
-        body.en .footer-links a:hover {
+        .english .footer-links a:hover {
             padding-right: 0;
             padding-left: 5px;
         }
@@ -920,17 +446,12 @@
             width: 40px;
             height: 40px;
             background: rgba(255, 255, 255, 0.1);
-            color: white;
+            border-radius: 50%;
             text-align: center;
             line-height: 40px;
-            border-radius: 50%;
-            margin-left: 10px;
-            transition: all 0.3s;
-        }
-        
-        body.en .social-icons a {
-            margin-left: 0;
             margin-right: 10px;
+            color: white;
+            transition: all 0.3s ease;
         }
         
         .social-icons a:hover {
@@ -938,400 +459,682 @@
             transform: translateY(-3px);
         }
         
+        .english .social-icons a {
+            margin-right: 0;
+            margin-left: 10px;
+        }
+        
         .copyright {
             text-align: center;
             padding-top: 30px;
             margin-top: 30px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.7);
+            color: #A0AEC0;
+            font-size: 0.9rem;
         }
         
-        /* Responsive adjustments */
-        @media (max-width: 767px) {
-            .hero h1 {
-                font-size: 2.5rem;
+        .language-switcher {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+        
+        .english .language-switcher {
+            left: auto;
+            right: 20px;
+        }
+        
+        .lang-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .lang-btn:hover {
+            background: #1E6B47;
+            transform: translateY(-3px);
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border-left: 4px solid var(--primary);
+            padding: 15px 20px;
+            border-radius: 5px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: all 0.5s ease;
+            max-width: 300px;
+        }
+        
+        .english .notification {
+            right: auto;
+            left: 20px;
+            transform: translateX(-400px);
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification h4 {
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .notification p {
+            color: var(--dark);
+            font-size: 0.9rem;
+        }
+        
+        .notification .close {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: #A0AEC0;
+            cursor: pointer;
+        }
+        
+        .english .notification .close {
+            left: auto;
+            right: 10px;
+        }
+        
+        /* Mobile Menu Styles */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .mobile-menu-sidebar {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100%;
+            background: white;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+        }
+        
+        .english .mobile-menu-sidebar {
+            right: auto;
+            left: -300px;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .mobile-menu-sidebar.active {
+            right: 0;
+        }
+        
+        .english .mobile-menu-sidebar.active {
+            left: 0;
+        }
+        
+        .mobile-menu-header {
+            padding: 20px;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .mobile-menu-header h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .mobile-menu-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .mobile-menu-content {
+            padding: 20px;
+        }
+        
+        .mobile-menu-content a {
+            display: block;
+            padding: 15px 0;
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-menu-content a:hover {
+            color: var(--primary);
+            padding-right: 10px;
+        }
+        
+        .english .mobile-menu-content a:hover {
+            padding-right: 0;
+            padding-left: 10px;
+        }
+        
+        @media (max-width: 992px) {
+            .swot-grid {
+                grid-template-columns: 1fr;
             }
             
-            .hero p {
-                font-size: 1.2rem;
+            .empathy-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .timeline::before {
+                right: 30px;
+            }
+            
+            .english .timeline::before {
+                left: 30px;
+                right: auto;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px !important;
+                padding-right: 30px !important;
+                text-align: right !important;
+            }
+            
+            .english .timeline-item {
+                padding-left: 30px !important;
+                padding-right: 70px !important;
+                text-align: left !important;
+            }
+            
+            .timeline-dot {
+                right: 20px !important;
+            }
+            
+            .english .timeline-dot {
+                left: 20px !important;
+                right: auto !important;
             }
             
             .section-title {
                 font-size: 2rem;
             }
-            
-            .future {
-                padding: 30px 20px;
-            }
-            
-            .welcome-content {
-                padding: 30px 20px;
-            }
-            
-            .welcome-title {
-                font-size: 1.8rem;
-            }
-            
-            .work-plan-card {
-                max-width: 100%;
-            }
-            
-            .process-step {
-                max-width: 100%;
-            }
-            
-            .pricing-card {
-                max-width: 100%;
-            }
-            
-            .pricing-card.featured {
-                transform: scale(1);
-            }
         }
     </style>
 </head>
 <body>
-    <!-- Welcome Modal -->
-    <div class="welcome-modal" id="welcomeModal">
-        <div class="welcome-content">
-            <button class="welcome-close" id="closeWelcome">
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <button class="close">&times;</button>
+        <h4 id="notificationTitle">مرحباً بك في AGRICODE</h4>
+        <p id="notificationText">استكشف ثورة التكنولوجيا الزراعية معنا</p>
+    </div>
+    
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    
+    <!-- Mobile Menu Sidebar -->
+    <div class="mobile-menu-sidebar" id="mobileMenuSidebar">
+        <div class="mobile-menu-header">
+            <h3>AGRICODE</h3>
+            <button class="mobile-menu-close" id="mobileMenuClose">
                 <i class="fas fa-times"></i>
             </button>
-            <div class="welcome-icon">
-                <i class="fas fa-recycle"></i>
-            </div>
-            <h2 class="welcome-title" data-ar="مرحباً بك في AGRICODE" data-en="Welcome to AGRICODE">مرحباً بك في AGRICODE</h2>
-            <p class="welcome-text" data-ar="نحن نربط بين المزارعين والشركات لتدوير المخلفات الزراعية وتحويلها إلى موارد قيمة. انضم إلينا في رحلة نحو اقتصاد دائري مستدام." data-en="We connect farmers with companies to recycle agricultural waste and transform it into valuable resources. Join us on a journey towards a sustainable circular economy.">نحن نربط بين المزارعين والشركات لتدوير المخلفات الزراعية وتحويلها إلى موارد قيمة. انضم إلينا في رحلة نحو اقتصاد دائري مستدام.</p>
-            <button class="welcome-btn" id="startExploring" data-ar="ابدأ الاستكشاف" data-en="Start Exploring">ابدأ الاستكشاف</button>
+        </div>
+        <div class="mobile-menu-content">
+            <a href="#home" class="mobile-menu-link">الرئيسية</a>
+            <a href="#about" class="mobile-menu-link">من نحن</a>
+            <a href="#services" class="mobile-menu-link">خدماتنا</a>
+            <a href="#pricing" class="mobile-menu-link">الأسعار</a>
+            <a href="#contact" class="mobile-menu-link">اتصل بنا</a>
         </div>
     </div>
-    <!-- Header -->
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <i class="fas fa-recycle"></i>
-                <span data-ar="AGRICODE" data-en="AGRICODE">AGRICODE</span>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#home" data-ar="الرئيسية" data-en="Home">الرئيسية</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#about" data-ar="من نحن" data-en="About Us">من نحن</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#onion-services" data-ar="خدمات البصل" data-en="Onion Services">خدمات البصل</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#process" data-ar="كيفية العمل" data-en="How It Works">كيفية العمل</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#services" data-ar="خدماتنا" data-en="Our Services">خدماتنا</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#pricing" data-ar="الأسعار" data-en="Pricing">الأسعار</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contact" data-ar="تواصل معنا" data-en="Contact Us">تواصل معنا</a>
-                    </li>
-                    <li class="nav-item lang-switcher">
-                        <div class="lang-dropdown" id="langDropdown">
-                            <i class="fas fa-globe"></i> <span id="currentLang">العربية</span>
-                        </div>
-                        <div class="lang-options" id="langOptions">
-                            <div class="lang-option" data-lang="ar">العربية</div>
-                            <div class="lang-option" data-lang="en">English</div>
-                        </div>
-                    </li>
-                </ul>
+    
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <button class="lang-btn" id="langBtn">EN</button>
+    </div>
+    
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <div class="text-2xl font-bold text-green-700">AGRICODE</div>
+            </div>
+            <div class="hidden md:flex space-x-reverse space-x-6">
+                <a href="#home" class="nav-link text-gray-700 hover:text-green-700 font-medium transition">الرئيسية</a>
+                <a href="#about" class="nav-link text-gray-700 hover:text-green-700 font-medium transition">من نحن</a>
+                <a href="#services" class="nav-link text-gray-700 hover:text-green-700 font-medium transition">خدماتنا</a>
+                <a href="#pricing" class="nav-link text-gray-700 hover:text-green-700 font-medium transition">الأسعار</a>
+                <a href="#contact" class="nav-link text-gray-700 hover:text-green-700 font-medium transition">اتصل بنا</a>
+            </div>
+            <div class="md:hidden">
+                <button id="mobileMenuBtn" class="text-gray-700 focus:outline-none">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
             </div>
         </div>
     </nav>
+    
     <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="container">
-            <h1 data-aos="fade-up" data-ar="وسيطك الموثوق في تدوير المخلفات الزراعية وخدمات البصل المتكاملة" data-en="Your Trusted Partner in Agricultural Waste Recycling and Comprehensive Onion Services">وسيطك الموثوق في تدوير المخلفات الزراعية وخدمات البصل المتكاملة</h1>
-            <p data-aos="fade-up" data-aos-delay="200" data-ar="AGRICODE - نحول المخلفات الزراعية إلى موارد قيمة ونقدم خدمات متخصصة لمحصول البصل" data-en="AGRICODE - We transform agricultural waste into valuable resources and provide specialized services for the onion crop">AGRICODE - نحول المخلفات الزراعية إلى موارد قيمة ونقدم خدمات متخصصة لمحصول البصل</p>
-            <a href="#about" class="btn btn-primary-custom" data-aos="fade-up" data-aos-delay="400" data-ar="اكتشف المزيد" data-en="Discover More">اكتشف المزيد</a>
+    <section id="home" class="hero-bg text-white py-32">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6" data-aos="fade-up" data-translate="hero-title">ثورة في التكنولوجيا الزراعية</h1>
+            <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="200" data-translate="hero-subtitle">AGRICODE - حلول متكاملة لزيادة الإنتاجية وتحقيق الاستدامة في الزراعة المصرية</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4" data-aos="fade-up" data-aos-delay="400">
+                <a href="#services" class="btn-primary" data-translate="discover-services">اكتشف خدماتنا</a>
+                <a href="#pricing" class="btn-secondary" data-translate="request-quote">اطلب عرض سعر</a>
+            </div>
         </div>
     </section>
+    
     <!-- About Section -->
-    <section id="about" class="section">
-        <div class="container">
-            <h2 class="section-title" data-aos="fade-up" data-ar="خطة عملنا" data-en="Our Work Plan">خطة عملنا</h2>
+    <section id="about" class="section-padding">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="section-title" data-aos="fade-up" data-translate="about-title">من نحن</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="200" data-translate="about-subtitle">AGRICODE هي شركة ناشئة رائدة في مجال التكنولوجيا الزراعية (AgriTech)، تهدف إلى إحداث نقلة نوعية في قطاع الزراعة المصرية من خلال حلول رقمية متكاملة</p>
+            </div>
             
-            <div class="work-plan-container">
-                <div class="work-plan-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="card-header">
-                        <div class="card-phase" data-ar="المرحلة الأولى" data-en="Phase One">المرحلة الأولى</div>
-                        <h3 class="card-title" data-ar="جمع البيانات" data-en="Data Collection">جمع البيانات</h3>
-                        <div class="card-icon">
-                            <i class="fas fa-database"></i>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <h4 data-ar="تحديد المخلفات الزراعية" data-en="Identifying Agricultural Waste">تحديد المخلفات الزراعية</h4>
-                        <p class="card-description" data-ar="جمع معلومات شاملة عن أنواع المخلفات الزراعية وكمياتها في المناطق المختلفة" data-en="Collecting comprehensive information about types and quantities of agricultural waste in different regions">جمع معلومات شاملة عن أنواع المخلفات الزراعية وكمياتها في المناطق المختلفة</p>
-                        <ul class="card-list">
-                            <li data-ar="تقييم أنواع المخلفات المتاحة" data-en="Evaluating available waste types">تقييم أنواع المخلفات المتاحة</li>
-                            <li data-ar="تحديد المناطق ذات الكميات الكبيرة" data-en="Identifying areas with large quantities">تحديد المناطق ذات الكميات الكبيرة</li>
-                            <li data-ar="دراسة مواسم التوافر" data-en="Studying availability seasons">دراسة مواسم التوافر</li>
-                            <li data-ar="تحليل تكاليف الجمع والنقل" data-en="Analyzing collection and transport costs">تحليل تكاليف الجمع والنقل</li>
-                        </ul>
-                    </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div data-aos="fade-right">
+                    <h3 class="text-2xl font-bold text-green-700 mb-4" data-translate="vision-title">رؤيتنا</h3>
+                    <p class="text-gray-700 mb-6" data-translate="vision-text">تحويل الزراعة المصرية إلى نموذج رقمي مستدام، حيث يحقق كل مزارع أقصى جودة وإنتاجية بأقل تكلفة وبصمة بيئية إيجابية.</p>
+                    
+                    <h3 class="text-2xl font-bold text-green-700 mb-4" data-translate="mission-title">رسالتنا</h3>
+                    <p class="text-gray-700" data-translate="mission-text">تمكين المزارعين المصريين بتقنيات الزراعة الرقمية المتكاملة، من خلال منصة AGRICODE التي تقدم متابعة دقيقة للمحاصيل، وإدارة مخلفات زراعية مربحة، واستشارات ذكاء اصطناعي موثوقة، وربط فعال بالأسواق، مع ضمان استدامة الموارد.</p>
                 </div>
                 
-                <div class="work-plan-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="card-header">
-                        <div class="card-phase" data-ar="المرحلة الثانية" data-en="Phase Two">المرحلة الثانية</div>
-                        <h3 class="card-title" data-ar="بناء الشبكة" data-en="Building the Network">بناء الشبكة</h3>
-                        <div class="card-icon">
-                            <i class="fas fa-network-wired"></i>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <h4 data-ar="ربط المزارعين بالشركات" data-en="Connecting Farmers with Companies">ربط المزارعين بالشركات</h4>
-                        <p class="card-description" data-ar="إنشاء شبكة قوية تربط بين موردي المخلفات الزراعية والمشترين المحتملين" data-en="Creating a strong network connecting agricultural waste suppliers with potential buyers">إنشاء شبكة قوية تربط بين موردي المخلفات الزراعية والمشترين المحتملين</p>
-                        <ul class="card-list">
-                            <li data-ar="التواصل مع المزارعين وملاك الأراضي" data-en="Communicating with farmers and landowners">التواصل مع المزارعين وملاك الأراضي</li>
-                            <li data-ar="تحديد الشركات المهتمة بالتدوير" data-en="Identifying companies interested in recycling">تحديد الشركات المهتمة بالتدوير</li>
-                            <li data-ar="إنشاء قاعدة بيانات للموردين والمشترين" data-en="Creating a database of suppliers and buyers">إنشاء قاعدة بيانات للموردين والمشترين</li>
-                            <li data-ar="تطوير منصة إلكترونية للتواصل" data-en="Developing an online communication platform">تطوير منصة إلكترونية للتواصل</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="work-plan-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="card-header">
-                        <div class="card-phase" data-ar="المرحلة الثالثة" data-en="Phase Three">المرحلة الثالثة</div>
-                        <h3 class="card-title" data-ar="التشغيل والتوسع" data-en="Operation and Expansion">التشغيل والتوسع</h3>
-                        <div class="card-icon">
-                            <i class="fas fa-rocket"></i>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <h4 data-ar="تنفيذ عمليات التدوير" data-en="Implementing Recycling Operations">تنفيذ عمليات التدوير</h4>
-                        <p class="card-description" data-ar="بدء العمليات الفعلية لجمع وتوزيع المخلفات الزراعية والتوسع في أسواق جديدة" data-en="Starting actual operations for collecting and distributing agricultural waste and expanding into new markets">بدء العمليات الفعلية لجمع وتوزيع المخلفات الزراعية والتوسع في أسواق جديدة</p>
-                        <ul class="card-list">
-                            <li data-ar="تنفيذ أولى صفقات التوريد" data-en="Executing first supply deals">تنفيذ أولى صفقات التوريد</li>
-                            <li data-ar="تطوير نظام لوجستي فعال" data-en="Developing an efficient logistics system">تطوير نظام لوجستي فعال</li>
-                            <li data-ar="التوسع في مناطق جغرافية جديدة" data-en="Expanding to new geographical areas">التوسع في مناطق جغرافية جديدة</li>
-                            <li data-ar="استكشاف أنواع جديدة من المخلفات" data-en="Exploring new types of waste">استكشاف أنواع جديدة من المخلفات</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Onion Services Section -->
-    <section id="onion-services" class="section">
-        <div class="container">
-            <div class="onion-services">
-                <h2 data-aos="fade-up" data-ar="خدماتنا المتخصصة لمحصول البصل" data-en="Our Specialized Onion Services">خدماتنا المتخصصة لمحصول البصل</h2>
-                <p class="text-center mb-5" data-aos="fade-up" data-aos-delay="100" data-ar="نركز على تقديم خدمات متكاملة ومبتكرة لمحصول البصل الاستراتيجي" data-en="We focus on providing comprehensive and innovative services for the strategic onion crop">نركز على تقديم خدمات متكاملة ومبتكرة لمحصول البصل الاستراتيجي</p>
-                
-                <div class="row">
-                    <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
-                        <div class="onion-service-card">
-                            <div class="onion-icon">
-                                <i class="fas fa-user-tie"></i>
+                <div data-aos="fade-left">
+                    <div class="bg-white rounded-xl shadow-lg p-6">
+                        <h3 class="text-xl font-bold text-green-700 mb-4" data-translate="founder-title">المؤسس والرائد</h3>
+                        <div class="flex items-center mb-6">
+                            <img src="https://mir-s3-cdn-cf.behance.net/user/230/f312d21937588581.683dfbe05e90e.jpg" alt="أحمد توحيد" class="w-24 h-24 rounded-full object-cover border-4 border-green-200">
+                            <div class="mr-4">
+                                <h4 class="text-xl font-bold">المهندس أحمد توحيد</h4>
+                                <p class="text-gray-600" data-translate="founder-position">مؤسس ورائد أعمال AGRICODE</p>
                             </div>
-                            <h3 data-ar="متابعة المحصول" data-en="Crop Monitoring">متابعة المحصول</h3>
-                            <p data-ar="متابعة محصول البصل من خلال فريق من المهندسين الزراعيين المتخصصين طوال مراحل النمو" data-en="Monitoring the onion crop through a team of specialized agricultural engineers throughout all growth stages">متابعة محصول البصل من خلال فريق من المهندسين الزراعيين المتخصصين طوال مراحل النمو</p>
                         </div>
+                        <p class="text-gray-700" data-translate="founder-bio">خريج هندسة الزراعة وله خبرة تزيد عن 10 سنوات في مجال التكنولوجيا الزراعية. يطمح إلى تحويل التحديات الزراعية في مصر إلى فرص للنمو والابتكار من خلال الحلول الرقمية.</p>
                     </div>
-                    
-                    <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
-                        <div class="onion-service-card">
-                            <div class="onion-icon">
-                                <i class="fas fa-comments"></i>
-                            </div>
-                            <h3 data-ar="استشارات أونلاين" data-en="Online Consultations">استشارات أونلاين</h3>
-                            <p data-ar="توفير استشارات زراعية متخصصة عبر الإنترنت لحل مشكلات محصول البصل" data-en="Providing specialized agricultural consultations online to solve onion crop problems">توفير استشارات زراعية متخصصة عبر الإنترنت لحل مشكلات محصول البصل</p>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
-                        <div class="onion-service-card">
-                            <div class="onion-icon">
-                                <i class="fas fa-graduation-cap"></i>
-                            </div>
-                            <h3 data-ar="توعية المزارعين" data-en="Farmer Awareness">توعية المزارعين</h3>
-                            <p data-ar="برامج توعية وتدريب للمزارعين حول أفضل ممارسات زراعة البصل" data-en="Awareness and training programs for farmers on best onion cultivation practices">برامج توعية وتدريب للمزارعين حول أفضل ممارسات زراعة البصل</p>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="500">
-                        <div class="onion-service-card">
-                            <div class="onion-icon">
-                                <i class="fas fa-database"></i>
-                            </div>
-                            <h3 data-ar="بيانات شاملة" data-en="Comprehensive Data">بيانات شاملة</h3>
-                            <p data-ar="توفير بيانات شاملة ومحدثة عن محصول البصل بشكل احترافي" data-en="Providing comprehensive and updated data about the onion crop professionally">توفير بيانات شاملة ومحدثة عن محصول البصل بشكل احترافي</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Interactive Platform Section -->
-    <!-- <section id="platform" class="section bg-light">
-        <div class="container">
-            <div class="platform-section">
-                <h2 class="section-title" data-aos="fade-up" data-ar="منصتنا التفاعلية لمحصول البصل" data-en="Our Interactive Platform for Onion Crop">منصتنا التفاعلية لمحصول البصل</h2>
-                <p class="text-center mb-5" data-aos="fade-up" data-aos-delay="100" data-ar="منصة رقمية تفاعلية توفر جميع المعلومات والخدمات المتعلقة بمحصول البصل بطريقة سهلة وممتعة" data-en="An interactive digital platform that provides all information and services related to the onion crop in an easy and enjoyable way">منصة رقمية تفاعلية توفر جميع المعلومات والخدمات المتعلقة بمحصول البصل بطريقة سهلة وممتعة</p>
-                
-                <div class="platform-features">
-                    <div class="platform-feature" data-aos="fade-up" data-aos-delay="200">
-                        <div class="platform-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <h3 data-ar="تحليلات في الوقت الحقيقي" data-en="Real-time Analytics">تحليلات في الوقت الحقيقي</h3>
-                        <p data-ar="متابعة أداء المحصول وتحليل البيانات الزراعية بشكل تفاعلي" data-en="Monitoring crop performance and analyzing agricultural data interactively">متابعة أداء المحصول وتحليل البيانات الزراعية بشكل تفاعلي</p>
-                    </div>
-                    
-                    <div class="platform-feature" data-aos="fade-up" data-aos-delay="300">
-                        <div class="platform-icon">
-                            <i class="fas fa-cloud-sun"></i>
-                        </div>
-                        <h3 data-ar="تنبؤات الطقس" data-en="Weather Forecasts">تنبؤات الطقس</h3>
-                        <p data-ar="توقعات جوية دقيقة مخصصة لمناطق زراعة البصل" data-en="Accurate weather forecasts customized for onion growing areas">توقعات جوية دقيقة مخصصة لمناطق زراعة البصل</p>
-                    </div>
-                    
-                    <div class="platform-feature" data-aos="fade-up" data-aos-delay="400">
-                        <div class="platform-icon">
-                            <i class="fas fa-virus"></i>
-                        </div>
-                        <h3 data-ar="كشف الأمراض" data-en="Disease Detection">كشف الأمراض</h3>
-                        <p data-ar="نظام ذني لكشف الأمراض والآفات مبكراً باستخدام الذكاء الاصطناعي" data-en="Smart system for early detection of diseases and pests using artificial intelligence">نظام ذني لكشف الأمراض والآفات مبكراً باستخدام الذكاء الاصطناعي</p>
-                    </div>
-                    
-                    <div class="platform-feature" data-aos="fade-up" data-aos-delay="500">
-                        <div class="platform-icon">
-                            <i class="fas fa-mobile-alt"></i>
-                        </div>
-                        <h3 data-ar="تطبيق جوال" data-en="Mobile App">تطبيق جوال</h3>
-                        <p data-ar="تطبيق جوال سهل الاستخدام للوصول لجميع خدماتنا أينما كنت" data-en="Easy-to-use mobile app to access all our services anywhere">تطبيق جوال سهل الاستخدام للوصول لجميع خدماتنا أينما كنت</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> -->
-    
-    <!-- Process Section -->
-    <section id="process" class="section">
-        <div class="container">
-            <h2 class="section-title" data-aos="fade-up" data-ar="كيفية عملنا" data-en="How We Work">كيفية عملنا</h2>
-            
-            <div class="process-container">
-                <div class="process-step" data-aos="fade-up" data-aos-delay="100">
-                    <div class="step-number">1</div>
-                    <div class="step-icon">
-                        <i class="fas fa-leaf"></i>
-                    </div>
-                    <h3 class="step-title" data-ar="جمع المخلفات" data-en="Waste Collection">جمع المخلفات</h3>
-                    <p data-ar="نتواصل مع المزارعين لجمع المخلفات الزراعية بأنواعها المختلفة من المزارع والمصانع" data-en="We communicate with farmers to collect various types of agricultural waste from farms and factories">نتواصل مع المزارعين لجمع المخلفات الزراعية بأنواعها المختلفة من المزارع والمصانع</p>
-                </div>
-                
-                <div class="process-step" data-aos="fade-up" data-aos-delay="200">
-                    <div class="step-number">2</div>
-                    <div class="step-icon">
-                        <i class="fas fa-sort-amount-down"></i>
-                    </div>
-                    <h3 class="step-title" data-ar="الفرز والتقييم" data-en="Sorting and Evaluation">الفرز والتقييم</h3>
-                    <p data-ar="نقوم بفرز المخلفات وتقييم جودتها وكمياتها لتحديد أفضل استخداماتها المحتملة" data-en="We sort the waste and evaluate its quality and quantities to determine its best potential uses">نقوم بفرز المخلفات وتقييم جودتها وكمياتها لتحديد أفضل استخداماتها المحتملة</p>
-                </div>
-                
-                <div class="process-step" data-aos="fade-up" data-aos-delay="300">
-                    <div class="step-number">3</div>
-                    <div class="step-icon">
-                        <i class="fas fa-handshake"></i>
-                    </div>
-                    <h3 class="step-title" data-ar="ربط المشترين" data-en="Connecting Buyers">ربط المشترين</h3>
-                    <p data-ar="نبحث عن الشركات والمصانع المهتمة بشراء المخلفات وننسيق عمليات البيع والشراء" data-en="We search for companies and factories interested in buying waste and coordinate sales and purchase operations">نبحث عن الشركات والمصانع المهتمة بشراء المخلفات وننسيق عمليات البيع والشراء</p>
-                </div>
-                
-                <div class="process-step" data-aos="fade-up" data-aos-delay="400">
-                    <div class="step-number">4</div>
-                    <div class="step-icon">
-                        <i class="fas fa-truck"></i>
-                    </div>
-                    <h3 class="step-title" data-ar="التوصيل والاستلام" data-en="Delivery and Receipt">التوصيل والاستلام</h3>
-                    <p data-ar="ننظم عملية نقل المخلفات من المزارع إلى الشركات المشترية ونتأكد من استلامها بشكل صحيح" data-en="We organize the transportation of waste from farms to buying companies and ensure its proper receipt">ننظم عملية نقل المخلفات من المزارع إلى الشركات المشترية ونتأكد من استلامها بشكل صحيح</p>
                 </div>
             </div>
         </div>
     </section>
     
     <!-- Services Section -->
-    <section id="services" class="section bg-light">
-        <div class="container">
-            <h2 class="section-title" data-aos="fade-up" data-ar="خدماتنا" data-en="Our Services">خدماتنا</h2>
+    <section id="services" class="section-padding bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="section-title" data-aos="fade-up" data-translate="services-title">خدماتنا</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="200" data-translate="services-subtitle">نقدم حلولاً متكاملة ومبتكرة لمواجهة التحديات الزراعية وتعزيز الاستدامة</p>
+            </div>
             
-            <div class="row g-4">
-                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
-                    <div class="service-card">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Service 1 -->
+                <div class="service-card card-hover" data-aos="fade-up" data-aos-delay="100">
+                    <div class="p-6">
                         <div class="service-icon">
-                            <i class="fas fa-users"></i>
+                            <i class="fas fa-seedling"></i>
                         </div>
-                        <h3 data-ar="وساطة تجارية" data-en="Commercial Brokerage">وساطة تجارية</h3>
-                        <p data-ar="نربط بين موردي المخلفات الزراعية والمشترين المهتمين ونضمن أفضل الأسعار للطرفين" data-en="We connect agricultural waste suppliers with interested buyers and ensure the best prices for both parties">نربط بين موردي المخلفات الزراعية والمشترين المهتمين ونضمن أفضل الأسعار للطرفين</p>
+                        <h3 class="text-xl font-bold mb-3" data-translate="service1-title">متابعة المحاصيل</h3>
+                        <p class="text-gray-600 mb-4" data-translate="service1-desc">فريق من المهندسين الزراعيين يتابع محاصيلك خطوة بخطوة لضمان أعلى جودة وإنتاجية</p>
+                        <ul class="text-gray-600 space-y-2">
+                            <li><i class="fas fa-check text-green-500 ml-2"></i><span data-translate="service1-feature1">زيارات ميدانية منتظمة</span></li>
+                            <li><i class="fas fa-check text-green-500 ml-2"></i><span data-translate="service1-feature2">تقارير مفصلة عن حالة المحصول</span></li>
+                            <li><i class="fas fa-check text-green-500 ml-2"></i><span data-translate="service1-feature3">استشارات فورية عبر الإنترنت</span></li>
+                        </ul>
                     </div>
                 </div>
                 
-                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
-                    <div class="service-card">
+                <!-- Service 2 -->
+                <div class="service-card card-hover" data-aos="fade-up" data-aos-delay="200">
+                    <div class="p-6">
                         <div class="service-icon">
-                            <i class="fas fa-truck-loading"></i>
+                            <i class="fas fa-recycle"></i>
                         </div>
-                        <h3 data-ar="خدمات لوجستية" data-en="Logistics Services">خدمات لوجستية</h3>
-                        <p data-ar="ننظم عمليات جمع وتخزين ونقل المخلفات الزراعية بكفاءة عالية وتكاليف مناسبة" data-en="We organize the collection, storage, and transportation of agricultural waste with high efficiency and reasonable costs">ننظم عمليات جمع وتخزين ونقل المخلفات الزراعية بكفاءة عالية وتكاليف مناسبة</p>
+                        <h3 class="text-xl font-bold mb-3" data-translate="service2-title">تدوير المخلفات</h3>
+                        <p class="text-gray-600 mb-4" data-translate="service2-desc">منصة رقمية تربط بين المزارعين ومصانع إعادة التدوير لتحويل النفايات إلى دخل</p>
+                        <ul class="text-gray-600 space-y-2">
+                            <li><i class="fas fa-check text-green-500 ml-2"></i><span data-translate="service2-feature1">عرض وبيع المخلفات بسهولة</span></li>
+                            <li><i class="fas fa-check text-green-500 ml-2"></i><span data-translate="service2-feature2">الوصول لشبكة واسعة من المصانع</span></li>
+                            <li><i class="fas fa-check text-green-500 ml-2"></i><span data-translate="service2-feature3">عقود واضحة وشفافة</span></li>
+                        </ul>
                     </div>
                 </div>
                 
-                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
-                    <div class="service-card">
+                <!-- Service 3 -->
+                <div class="service-card card-hover" data-aos="fade-up" data-aos-delay="300">
+                    <div class="p-6">
                         <div class="service-icon">
-                            <i class="fas fa-chart-line"></i>
+                            <i class="fas fa-brain"></i>
                         </div>
-                        <h3 data-ar="استشارات السوق" data-en="Market Consulting">استشارات السوق</h3>
-                        <p data-ar="نقدم استشارات حول أفضل الأسواق للمخلفات الزراعية والفرص المتاحة في مجال التدوير" data-en="We provide consulting on the best markets for agricultural waste and available opportunities in the recycling field">نقدم استشارات حول أفضل الأسواق للمخلفات الزراعية والفرص المتاحة في مجال التدوير</p>
+                        <h3 class="text-xl font-bold mb-3" data-translate="service3-title">المساعد الذكي</h3>
+                        <p class="text-gray-600 mb-4" data-translate="service3-desc">نموذج ذكاء اصطناعي يعمل كـ "مهندس زراعي افتراضي" لمساعدتك في كل خطوة</p>
+                        <ul class="text-gray-600 space-y-2">
+                            <li><i class="fas fa-check text-green-500 ml-2"></i><span data-translate="service3-feature1">جدول زمني دقيق للعمليات</span></li>
+                            <li><i class="fas fa-check text-green-500 ml-2"></i><span data-translate="service3-feature2">تنبيهات مبكرة للأمراض</span></li>
+                            <li><i class="fas fa-check text-green-500 ml-2"></i><span data-translate="service3-feature3">نصائح مخصصة لكل محصول</span></li>
+                        </ul>
                     </div>
                 </div>
                 
-                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="400">
-                    <div class="service-card">
+                <!-- Service 4 -->
+                <div class="service-card card-hover" data-aos="fade-up" data-aos-delay="400">
+                    <div class="p-6">
                         <div class="service-icon">
-                            <i class="fas fa-file-contract"></i>
+                            <i class="fas fa-chalkboard-teacher"></i>
                         </div>
-                        <h3 data-ar="إدارة العقود" data-en="Contract Management">إدارة العقود</h3>
-                        <p data-ar="نساعد في إعداد وإدارة العقود بين المزارعين والشركات لضمان حقوق جميع الأطراف" data-en="We assist in preparing and managing contracts between farmers and companies to ensure the rights of all parties">نساعد في إعداد وإدارة العقود بين المزارعين والشركات لضمان حقوق جميع الأطراف</p>
+                        <h3 class="text-xl font-bold mb-3" data-translate="service4-title">المحتوى التوعوي</h3>
+                        <p class="text-gray-600 mb-4" data-translate="service4-desc">مقالات وفيديوهات تعليمية لنشر الوعي بأهمية الزراعة الرقمية والاستدامة</p>
+                        <ul class="text-gray-600 space-y-2">
+                            <li><i class="fas fa-check text-green-500 ml-2"></i><span data-translate="service4-feature1">مقالات متخصصة ومحدثة</span></li>
+                            <li><i class="fas fa-check text-green-500 ml-2"></i><span data-translate="service4-feature2">فيديوهات توضيحية عملية</span></li>
+                            <li><i class="fas fa-check text-green-500 ml-2"></i><span data-translate="service4-feature3">نصائح من خبراء الزراعة</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Challenges & Solutions Section -->
+    <section class="section-padding">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="section-title" data-aos="fade-up" data-translate="challenges-title">التحديات والحلول</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="200" data-translate="challenges-subtitle">نواجه التحديات الزراعية بحلول مبتكرة وفعالة</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Challenge 1 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden" data-aos="fade-right">
+                    <div class="bg-red-500 text-white p-4">
+                        <h3 class="text-xl font-bold" data-translate="challenge1-title">انخفاض الوعي الرقمي لدى المزارعين</h3>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-700 mb-4" data-translate="challenge1-desc">صعوبة تبني المزارعين للتكنولوجيا الحديثة بسبب قلة الخبرة والخوف من التعقيد</p>
+                        <div class="bg-green-50 rounded-lg p-4 border-l-4 border-green-500">
+                            <h4 class="font-bold text-green-700 mb-2" data-translate="solution-title">حلولنا</h4>
+                            <ul class="text-gray-700 space-y-1">
+                                <li data-translate="challenge1-solution1">• حملات توعية مكثفة عبر وسائل التواصل</li>
+                                <li data-translate="challenge1-solution2">• واجهة مستخدم بسيطة وسهلة الاستخدام</li>
+                                <li data-translate="challenge1-solution3">• دعم ميداني وفني مستمر</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="500">
-                    <div class="service-card">
-                        <div class="service-icon">
-                            <i class="fas fa-search-dollar"></i>
+                <!-- Challenge 2 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden" data-aos="fade-left">
+                    <div class="bg-red-500 text-white p-4">
+                        <h3 class="text-xl font-bold" data-translate="challenge2-title">صعوبة الوصول للمزارعين البعيدين</h3>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-700 mb-4" data-translate="challenge2-desc">تحديات الوصول للمزارعين في المناطق النائية وتقديم الخدمات لهم</p>
+                        <div class="bg-green-50 rounded-lg p-4 border-l-4 border-green-500">
+                            <h4 class="font-bold text-green-700 mb-2" data-translate="solution-title">حلولنا</h4>
+                            <ul class="text-gray-700 space-y-1">
+                                <li data-translate="challenge2-solution1">• شراكات مع الجمعيات الزراعية المحلية</li>
+                                <li data-translate="challenge2-solution2">• فروع وممثلين في المناطق الزراعية</li>
+                                <li data-translate="challenge2-solution3">• وكلاء محليون موثوقون</li>
+                            </ul>
                         </div>
-                        <h3 data-ar="تقييم المخلفات" data-en="Waste Evaluation">تقييم المخلفات</h3>
-                        <p data-ar="نقوم بتقييم نوعية وكمية المخلفات الزراعية وتحديد قيمتها السوقية المحتملة" data-en="We evaluate the quality and quantity of agricultural waste and determine its potential market value">نقوم بتقييم نوعية وكمية المخلفات الزراعية وتحديد قيمتها السوقية المحتملة</p>
                     </div>
                 </div>
                 
-                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="600">
-                    <div class="service-card">
-                        <div class="service-icon">
-                            <i class="fas fa-globe"></i>
+                <!-- Challenge 3 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden" data-aos="fade-right">
+                    <div class="bg-red-500 text-white p-4">
+                        <h3 class="text-xl font-bold" data-translate="challenge3-title">ضمان جودة البيانات ودقة الذكاء الاصطناعي</h3>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-700 mb-4" data-translate="challenge3-desc">الحاجة لبيانات دقيقة وموثوقة لضمان فعالية حلول الذكاء الاصطناعي</p>
+                        <div class="bg-green-50 rounded-lg p-4 border-l-4 border-green-500">
+                            <h4 class="font-bold text-green-700 mb-2" data-translate="solution-title">حلولنا</h4>
+                            <ul class="text-gray-700 space-y-1">
+                                <li data-translate="challenge3-solution1">• بيانات مدققة من خبراء زراعيين</li>
+                                <li data-translate="challenge3-solution2">• تحديث مستمر لنماذج الذكاء الاصطناعي</li>
+                                <li data-translate="challenge3-solution3">• آليات تغذية راجعة من المزارعين</li>
+                            </ul>
                         </div>
-                        <h3 data-ar="توسيع الأسواق" data-en="Market Expansion">توسيع الأسواق</h3>
-                        <p data-ar="نساعد المزارعين والشركات على الوصول إلى أسواق جديدة محلية ودولية للمخلفات الزراعية" data-en="We help farmers and companies access new local and international markets for agricultural waste">نساعد المزارعين والشركات على الوصول إلى أسواق جديدة محلية ودولية للمخلفات الزراعية</p>
+                    </div>
+                </div>
+                
+                <!-- Challenge 4 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden" data-aos="fade-left">
+                    <div class="bg-red-500 text-white p-4">
+                        <h3 class="text-xl font-bold" data-translate="challenge4-title">تنوع وتشتت المخلفات الزراعية</h3>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-700 mb-4" data-translate="challenge4-desc">صعوبة إدارة وتصنيف المخلفات الزراعية المتنوعة وربطها بالصناعات المناسبة</p>
+                        <div class="bg-green-50 rounded-lg p-4 border-l-4 border-green-500">
+                            <h4 class="font-bold text-green-700 mb-2" data-translate="solution-title">حلولنا</h4>
+                            <ul class="text-gray-700 space-y-1">
+                                <li data-translate="challenge4-solution1">• نظام تصنيف دقيق للمخلفات</li>
+                                <li data-translate="challenge4-solution2">• شبكة واسعة من المصانع الشريكة</li>
+                                <li data-translate="challenge4-solution3">• حلول لوجستية مرنة</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- SWOT Analysis Section -->
+    <section class="section-padding bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="section-title" data-aos="fade-up" data-translate="swot-title">تحليل SWOT</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="200" data-translate="swot-subtitle">تحليل نقاط القوة والضعف والفرص والتهديدات</p>
+            </div>
+            
+            <div class="swot-grid">
+                <!-- Strengths -->
+                <div class="swot-card strengths" data-aos="fade-right">
+                    <h3><i class="fas fa-star"></i> <span data-translate="strengths-title">نقاط القوة</span></h3>
+                    <ul class="space-y-2">
+                        <li data-translate="strengths-1">• نموذج أعمال متكامل وفريد</li>
+                        <li data-translate="strengths-2">• التركيز على الجودة والاستدامة</li>
+                        <li data-translate="strengths-3">• فريق متخصص من الخبراء</li>
+                        <li data-translate="strengths-4">• حلول عملية للتحديات الحقيقية</li>
+                        <li data-translate="strengths-5">• منصة رقمية سهلة الاستخدام</li>
+                        <li data-translate="strengths-6">• إمكانية التوسع المستقبلي</li>
+                    </ul>
+                </div>
+                
+                <!-- Weaknesses -->
+                <div class="swot-card weaknesses" data-aos="fade-left">
+                    <h3><i class="fas fa-exclamation-triangle"></i> <span data-translate="weaknesses-title">نقاط الضعف</span></h3>
+                    <ul class="space-y-2">
+                        <li data-translate="weaknesses-1">• كيان ناشئ بدون سمرة طويلة</li>
+                        <li data-translate="weaknesses-2">• الاعتماد على التمويل الخارجي</li>
+                        <li data-translate="weaknesses-3">• تحدي تبني التكنولوجيا لدى المزارعين</li>
+                        <li data-translate="weaknesses-4">• صعوبة إدارة العمليات الميدانية</li>
+                        <li data-translate="weaknesses-5">• جمع البيانات الأولية</li>
+                        <li data-translate="weaknesses-6">• الاعتماد على شركاء خارجيين</li>
+                    </ul>
+                </div>
+                
+                <!-- Opportunities -->
+                <div class="swot-card opportunities" data-aos="fade-right">
+                    <h3><i class="fas fa-lightbulb"></i> <span data-translate="opportunities-title">الفرص</span></h3>
+                    <ul class="space-y-2">
+                        <li data-translate="opportunities-1">• نمو سوق التكنولوجيا الزراعية</li>
+                        <li data-translate="opportunities-2">• الدعم الحكومي للتحول الرقمي</li>
+                        <li data-translate="opportunities-3">• الطلب المتزايد على المنتجات العضوية</li>
+                        <li data-translate="opportunities-4">• توجه نحو الاقتصاد الدائري</li>
+                        <li data-translate="opportunities-5">• إمكانية الشراكات الاستراتيجية</li>
+                        <li data-translate="opportunities-6">• التوسع الجغرافي والمحصولي</li>
+                    </ul>
+                </div>
+                
+                <!-- Threats -->
+                <div class="swot-card threats" data-aos="fade-left">
+                    <h3><i class="fas fa-bolt"></i> <span data-translate="threats-title">التهديدات</span></h3>
+                    <ul class="space-y-2">
+                        <li data-translate="threats-1">• منافسة متزايدة في السوق</li>
+                        <li data-translate="threats-2">• تغيرات تشريعية محتملة</li>
+                        <li data-translate="threats-3">• تقلبات أسعار المحاصيل والمخلفات</li>
+                        <li data-translate="threats-4">• المخاطر التقنية والأمنية</li>
+                        <li data-translate="threats-5">• مقاومة التغيير من المزارعين</li>
+                        <li data-translate="threats-6">• العوامل الخارجية (المناخ، الأوبئة)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- User Personas Section -->
+    <section class="section-padding">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="section-title" data-aos="fade-up" data-translate="personas-title">شخصيات المستخدمين</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="200" data-translate="personas-subtitle">نصمم حلولنا لتلبية احتياجات شرائح مختلفة من المزارعين</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Persona 1 -->
+                <div class="persona-card card-hover" data-aos="fade-up" data-aos-delay="100">
+                    <div class="persona-header">
+                        <h3 data-translate="persona1-name">أحمد عبد الله</h3>
+                        <p data-translate="persona1-role">المزارع التقليدي</p>
+                    </div>
+                    <div class="persona-body">
+                        <div class="flex justify-center mb-4">
+                            <img src="https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1906669723.jpg" alt="أحمد" class="w-24 h-24 rounded-full object-cover border-4 border-white">
+                        </div>
+                        <div class="text-center mb-4">
+                            <span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded" data-translate="persona1-type">صغير/متوسط الحيازة</span>
+                        </div>
+                        <h4 class="font-bold text-green-700 mb-2" data-translate="goals-title">أهدافه:</h4>
+                        <ul class="text-sm text-gray-700 mb-4 space-y-1">
+                            <li data-translate="persona1-goal1">• حماية المحصول من الأمراض</li>
+                            <li data-translate="persona1-goal2">• معرفة مواعيد الري والتسميد</li>
+                            <li data-translate="persona1-goal3">• بيع المحصول بسعر عادل</li>
+                        </ul>
+                        <h4 class="font-bold text-green-700 mb-2" data-translate="challenges-title">تحدياته:</h4>
+                        <ul class="text-sm text-gray-700 space-y-1">
+                            <li data-translate="persona1-challenge1">• الأمراض المفاجئة</li>
+                            <li data-translate="persona1-challenge2">• استغلال التجار</li>
+                            <li data-translate="persona1-challenge3">• تراكم المخلفات</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Persona 2 -->
+                <div class="persona-card card-hover" data-aos="fade-up" data-aos-delay="200">
+                    <div class="persona-header">
+                        <h3 data-translate="persona2-name">فاطمة حسن</h3>
+                        <p data-translate="persona2-role">المزارعة الكبيرة</p>
+                    </div>
+                    <div class="persona-body">
+                        <div class="flex justify-center mb-4">
+                            <img src="https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1906669723.jpg" alt="فاطمة" class="w-24 h-24 rounded-full object-cover border-4 border-white">
+                        </div>
+                        <div class="text-center mb-4">
+                            <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded" data-translate="persona2-type">كبيرة الحيازة</span>
+                        </div>
+                        <h4 class="font-bold text-green-700 mb-2" data-translate="goals-title">أهدافها:</h4>
+                        <ul class="text-sm text-gray-700 mb-4 space-y-1">
+                            <li data-translate="persona2-goal1">• زيادة الربحية والكفاءة</li>
+                            <li data-translate="persona2-goal2">• ضمان الجودة للتصدير</li>
+                            <li data-translate="persona2-goal3">• تطبيق الاستدامة</li>
+                        </ul>
+                        <h4 class="font-bold text-green-700 mb-2" data-translate="challenges-title">تحدياتها:</h4>
+                        <ul class="text-sm text-gray-700 space-y-1">
+                            <li data-translate="persona2-challenge1">• إدارة المخلفات الضخمة</li>
+                            <li data-translate="persona2-challenge2">• تعقيدات التسويق</li>
+                            <li data-translate="persona2-challenge3">• الحصول على شهادات الجودة</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Persona 3 -->
+                <div class="persona-card card-hover" data-aos="fade-up" data-aos-delay="300">
+                    <div class="persona-header">
+                        <h3 data-translate="persona3-name">خالد إبراهيم</h3>
+                        <p data-translate="persona3-role">مدير مصنع</p>
+                    </div>
+                    <div class="persona-body">
+                        <div class="flex justify-center mb-4">
+                            <img src="https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1906669723.jpg" alt="خالد" class="w-24 h-24 rounded-full object-cover border-4 border-white">
+                        </div>
+                        <div class="text-center mb-4">
+                            <span class="bg-purple-100 text-purple-800 text-xs font-semibold px-2.5 py-0.5 rounded" data-translate="persona3-type">شريك صناعي</span>
+                        </div>
+                        <h4 class="font-bold text-green-700 mb-2" data-translate="goals-title">أهدافه:</h4>
+                        <ul class="text-sm text-gray-700 mb-4 space-y-1">
+                            <li data-translate="persona3-goal1">• تأمين مواد خام بجودة عالية</li>
+                            <li data-translate="persona3-goal2">• ضمان تدفق مستمر للتوريد</li>
+                            <li data-translate="persona3-goal3">• تقليل تكاليف التوريد</li>
+                        </ul>
+                        <h4 class="font-bold text-green-700 mb-2" data-translate="challenges-title">تحدياته:</h4>
+                        <ul class="text-sm text-gray-700 space-y-1">
+                            <li data-translate="persona3-challenge1">• الوصول لمزارعين صغار</li>
+                            <li data-translate="persona3-challenge2">• تقلب جودة المخلفات</li>
+                            <li data-translate="persona3-challenge3">• عدم استقرار الأسعار</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Persona 4 -->
+                <div class="persona-card card-hover" data-aos="fade-up" data-aos-delay="400">
+                    <div class="persona-header">
+                        <h3 data-translate="persona4-name">سارة أحمد</h3>
+                        <p data-translate="persona4-role">المزارعة الشابة</p>
+                    </div>
+                    <div class="persona-body">
+                        <div class="flex justify-center mb-4">
+                            <img src="https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1906669723.jpg" alt="سارة" class="w-24 h-24 rounded-full object-cover border-4 border-white">
+                        </div>
+                        <div class="text-center mb-4">
+                            <span class="bg-yellow-100 text-yellow-800 text-xs font-semibold px-2.5 py-0.5 rounded" data-translate="persona4-type">خريجة زراعة</span>
+                        </div>
+                        <h4 class="font-bold text-green-700 mb-2" data-translate="goals-title">أهدافها:</h4>
+                        <ul class="text-sm text-gray-700 mb-4 space-y-1">
+                            <li data-translate="persona4-goal1">• تطبيق المعرفة النظرية</li>
+                            <li data-translate="persona4-goal2">• زراعة عضوية مستدامة</li>
+                            <li data-translate="persona4-goal3">• إنشاء مشروع ناجح</li>
+                        </ul>
+                        <h4 class="font-bold text-green-700 mb-2" data-translate="challenges-title">تحدياتها:</h4>
+                        <ul class="text-sm text-gray-700 space-y-1">
+                            <li data-translate="persona4-challenge1">• نقص الخبرة العملية</li>
+                            <li data-translate="persona4-challenge2">• صعوبة الحصول على تمويل</li>
+                            <li data-translate="persona4-challenge3">• نظرة المجتمع التقليدية</li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -1339,64 +1142,155 @@
     </section>
     
     <!-- Pricing Section -->
-    <section id="pricing" class="section">
-        <div class="container">
-            <div class="pricing-section">
-                <h2 class="section-title" data-aos="fade-up" data-ar="خطة التسعير" data-en="Pricing Plan">خطة التسعير</h2>
-                <p class="text-center mb-5" data-aos="fade-up" data-aos-delay="100" data-ar="اختر الباقة التي تناسب احتياجاتك بأسعار تنافسية وشفافة" data-en="Choose the package that suits your needs with competitive and transparent prices">اختر الباقة التي تناسب احتياجاتك بأسعار تنافسية وشفافة</p>
+    <section id="pricing" class="section-padding bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="section-title" data-aos="fade-up" data-translate="pricing-title">باقات الأسعار</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="200" data-translate="pricing-subtitle">اختر الباقة التي تناسب احتياجاتك</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Package 1 -->
+                <div class="pricing-card card-hover" data-aos="fade-up" data-aos-delay="100">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-center mb-4" data-translate="package1-title">المبتدئ الذكي</h3>
+                        <div class="text-center mb-6">
+                            <span class="text-3xl font-bold text-green-700">150</span>
+                            <span class="text-gray-600" data-translate="currency">جنيه/شهر</span>
+                        </div>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 ml-2"></i>
+                                <span data-translate="package1-feature1">المساعد الذكي (AI)</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 ml-2"></i>
+                                <span data-translate="package1-feature2">مكتبة البصل التفاعلية</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 ml-2"></i>
+                                <span data-translate="package1-feature3">المحتوى التوعوي</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 ml-2"></i>
+                                <span data-translate="package1-feature4">عرض مخلف واحد شهرياً</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 ml-2"></i>
+                                <span data-translate="package1-feature5">دعم فني أساسي</span>
+                            </li>
+                        </ul>
+                        <div class="text-center">
+                            <a href="#contact" class="btn-primary w-full" data-translate="choose-plan">اختر الباقة</a>
+                        </div>
+                    </div>
+                </div>
                 
-                <div class="pricing-cards">
-                    <div class="pricing-card" data-aos="fade-up" data-aos-delay="200">
-                        <div class="pricing-header">
-                            <h3 class="pricing-title" data-ar="الباقة الأساسية" data-en="Basic Package">الباقة الأساسية</h3>
-                            <div class="pricing-price">500</div>
-                            <div class="pricing-period" data-ar="جنيه / شهر" data-en="EGP / month">جنيه / شهر</div>
+                <!-- Package 2 -->
+                <div class="pricing-card card-hover" data-aos="fade-up" data-aos-delay="200">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-center mb-4" data-translate="package2-title">المحترف الميداني</h3>
+                        <div class="text-center mb-6">
+                            <span class="text-3xl font-bold text-green-700">400</span>
+                            <span class="text-gray-600" data-translate="currency">جنيه/شهر</span>
                         </div>
-                        <div class="pricing-body">
-                            <ul class="pricing-list">
-                                <li data-ar="استشارات زراعية محدودة" data-en="Limited agricultural consultations">استشارات زراعية محدودة</li>
-                                <li data-ar="وصول لبيانات أساسية" data-en="Access to basic data">وصول لبيانات أساسية</li>
-                                <li data-ar="وساطة في صفقة واحدة شهرياً" data-en="Brokerage in one deal per month">وساطة في صفقة واحدة شهرياً</li>
-                                <li data-ar="دعم عبر البريد الإلكتروني" data-en="Email support">دعم عبر البريد الإلكتروني</li>
-                            </ul>
-                            <button class="pricing-btn" data-ar="اختر الباقة" data-en="Choose Package">اختر الباقة</button>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 ml-2"></i>
+                                <span data-translate="package2-feature1">كل مميزات الباقة المبتدئ</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 ml-2"></i>
+                                <span data-translate="package2-feature2">4 زيارات ميدانية سنوياً</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 ml-2"></i>
+                                <span data-translate="package2-feature3">تقارير مفصلة</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 ml-2"></i>
+                                <span data-translate="package2-feature4">استشارة أونلاين مخصصة</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 ml-2"></i>
+                                <span data-translate="package2-feature5">عرض 3 مخلفات شهرياً</span>
+                            </li>
+                        </ul>
+                        <div class="text-center">
+                            <a href="#contact" class="btn-primary w-full" data-translate="choose-plan">اختر الباقة</a>
                         </div>
                     </div>
-                    
-                    <div class="pricing-card featured" data-aos="fade-up" data-aos-delay="300">
-                        <div class="pricing-header">
-                            <h3 class="pricing-title" data-ar="الباقة الاحترافية" data-en="Professional Package">الباقة الاحترافية</h3>
-                            <div class="pricing-price">1500</div>
-                            <div class="pricing-period" data-ar="جنيه / شهر" data-en="EGP / month">جنيه / شهر</div>
+                </div>
+                
+                <!-- Package 3 -->
+                <div class="pricing-card featured card-hover" data-aos="fade-up" data-aos-delay="300">
+                    <div class="badge" data-translate="popular">الأكثر شعبية</div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-center mb-4" data-translate="package3-title">الشاملة المتكاملة</h3>
+                        <div class="text-center mb-6">
+                            <span class="text-3xl font-bold text-green-700">800</span>
+                            <span class="text-gray-600" data-translate="currency">جنيه/شهر</span>
                         </div>
-                        <div class="pricing-body">
-                            <ul class="pricing-list">
-                                <li data-ar="استشارات زراعية غير محدودة" data-en="Unlimited agricultural consultations">استشارات زراعية غير محدودة</li>
-                                <li data-ar="وصول كامل لقاعدة البيانات" data-en="Full access to database">وصول كامل لقاعدة البيانات</li>
-                                <li data-ar="وساطة في 5 صفقات شهرياً" data-en="Brokerage in 5 deals per month">وساطة في 5 صفقات شهرياً</li>
-                                <li data-ar="متابعة المحصول الأساسية" data-en="Basic crop monitoring">متابعة المحصول الأساسية</li>
-                                <li data-ar="دعم عبر الهاتف والبريد" data-en="Phone and email support">دعم عبر الهاتف والبريد</li>
-                            </ul>
-                            <button class="pricing-btn" data-ar="اختر الباقة" data-en="Choose Package">اختر الباقة</button>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 ml-2"></i>
+                                <span data-translate="package3-feature1">كل مميزات الباقة المحترف</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 ml-2"></i>
+                                <span data-translate="package3-feature2">8 زيارات ميدانية سنوياً</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 ml-2"></i>
+                                <span data-translate="package3-feature3">استشارات غير محدودة</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 ml-2"></i>
+                                <span data-translate="package3-feature4">عروض مخلفات غير محدودة</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 ml-2"></i>
+                                <span data-translate="package3-feature5">تسويق متكامل للمحصول</span>
+                            </li>
+                        </ul>
+                        <div class="text-center">
+                            <a href="#contact" class="btn-secondary w-full" data-translate="choose-plan">اختر الباقة</a>
                         </div>
                     </div>
-                    
-                    <div class="pricing-card" data-aos="fade-up" data-aos-delay="400">
-                        <div class="pricing-header">
-                            <h3 class="pricing-title" data-ar="الباقة المميزة" data-en="Premium Package">الباقة المميزة</h3>
-                            <div class="pricing-price">3000</div>
-                            <div class="pricing-period" data-ar="جنيه / شهر" data-en="EGP / month">جنيه / شهر</div>
+                </div>
+                
+                <!-- Package 4 -->
+                <div class="pricing-card card-hover" data-aos="fade-up" data-aos-delay="400">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-center mb-4" data-translate="package4-title">المؤسسة/الشريك</h3>
+                        <div class="text-center mb-6">
+                            <span class="text-3xl font-bold text-green-700" data-translate="custom">مخصص</span>
+                            <span class="text-gray-600" data-translate="package4-subtitle">حسب الاحتياج</span>
                         </div>
-                        <div class="pricing-body">
-                            <ul class="pricing-list">
-                                <li data-ar="جميع مزايا الباقة الاحترافية" data-en="All Professional Package features">جميع مزايا الباقة الاحترافية</li>
-                                <li data-ar="وساطة غير محدودة" data-en="Unlimited brokerage">وساطة غير محدودة</li>
-                                <li data-ar="متابعة المحصول المتقدمة" data-en="Advanced crop monitoring">متابعة المحصول المتقدمة</li>
-                                <li data-ar="خدمات لوجستية متميزة" data-en="Premium logistics services">خدمات لوجستية متميزة</li>
-                                <li data-ar="مدير حساب مخصص" data-en="Dedicated account manager">مدير حساب مخصص</li>
-                                <li data-ar="تقارير تحليلية شهرية" data-en="Monthly analytical reports">تقارير تحليلية شهرية</li>
-                            </ul>
-                            <button class="pricing-btn" data-ar="اختر الباقة" data-en="Choose Package">اختر الباقة</button>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 ml-2"></i>
+                                <span data-translate="package4-feature1">حلول متكاملة للمتابعة</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 ml-2"></i>
+                                <span data-translate="package4-feature2">نظام AI مخصص</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 ml-2"></i>
+                                <span data-translate="package4-feature3">منصة تدوير مخصصة</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 ml-2"></i>
+                                <span data-translate="package4-feature4">تقارير وتحليلات متقدمة</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 ml-2"></i>
+                                <span data-translate="package4-feature5">مدير مشروع مخصص</span>
+                            </li>
+                        </ul>
+                        <div class="text-center">
+                            <a href="#contact" class="btn-primary w-full" data-translate="request-quote">اطلب عرض سعر</a>
                         </div>
                     </div>
                 </div>
@@ -1404,299 +1298,781 @@
         </div>
     </section>
     
-    <!-- Future Section -->
-    <section id="future" class="section">
-        <div class="container">
-            <h2 class="section-title" data-aos="fade-up" data-ar="رؤيتنا المستقبلية" data-en="Our Future Vision">رؤيتنا المستقبلية</h2>
+    <!-- Sample Contracts Section -->
+    <section class="section-padding">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="section-title" data-aos="fade-up" data-translate="contracts-title">نماذج العقود</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="200" data-translate="contracts-subtitle">عقود واضحة وشفافة تحمي حقوق جميع الأطراف</p>
+            </div>
             
-            <div class="future" data-aos="fade-up" data-aos-delay="200">
-                <h2 data-ar="أهدافنا الاستراتيجية" data-en="Our Strategic Goals">أهدافنا الاستراتيجية</h2>
-                <ul>
-                    <li data-ar="بناء أكبر شبكة لتبادل المخلفات الزراعية في المنطقة" data-en="Building the largest network for exchanging agricultural waste in the region">بناء أكبر شبكة لتبادل المخلفات الزراعية في المنطقة</li>
-                    <li data-ar="تطوير منصة رقمية متكاملة لإدارة عمليات التدوير" data-en="Developing an integrated digital platform for managing recycling operations">تطوير منصة رقمية متكاملة لإدارة عمليات التدوير</li>
-                    <li data-ar="توسيع نطاق عملنا ليشمل دول عربية وأفريقية" data-en="Expanding our scope to include Arab and African countries">توسيع نطاق عملنا ليشمل دول عربية وأفريقية</li>
-                    <li data-ar="المساهمة في تحقيق أهداف التنمية المستدامة" data-en="Contributing to achieving sustainable development goals">المساهمة في تحقيق أهداف التنمية المستدامة</li>
-                    <li data-ar="خلق فرص عمل جديدة في مجال الاقتصاد الدائري" data-en="Creating new job opportunities in the circular economy field">خلق فرص عمل جديدة في مجال الاقتصاد الدائري</li>
-                </ul>
+            <div class="max-w-4xl mx-auto">
+                <!-- Contract 1 -->
+                <div class="contract-card" data-aos="fade-up">
+                    <h3 data-translate="contract1-title">عقد خدمة متابعة المحاصيل</h3>
+                    <p class="text-gray-700 mb-4" data-translate="contract1-desc">عقد بين شركة AGRICODE والمزارع لتقديم خدمة متابعة المحاصيل شاملة الزيارات الميدانية والتقارير والاستشارات.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded" data-translate="contract1-tag1">شفافية</span>
+                        <span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded" data-translate="contract1-tag2">ضمان جودة</span>
+                        <span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded" data-translate="contract1-tag3">حماية حقوق</span>
+                    </div>
+                    <a href="#" class="text-green-700 font-medium hover:underline" data-translate="download-contract">تحميل نموذج العقد <i class="fas fa-download mr-1"></i></a>
+                </div>
                 
-                <h2 class="mt-5" data-ar="ابتكاراتنا في محصول البصل" data-en="Our Innovations in Onion Crop">ابتكاراتنا في محصول البصل</h2>
-                <p data-ar="نسعى للابتكار المستمر في مجال محصول البصل من خلال:" data-en="We strive for continuous innovation in the onion crop field through:">نسعى للابتكار المستمر في مجال محصول البصل من خلال:</p>
-                <ul>
-                    <li data-ar="تطوير أصناف جديدة مقاومة للأمراض" data-en="Developing new disease-resistant varieties">تطوير أصناف جديدة مقاومة للأمراض</li>
-                    <li data-ar="ابتكار طرق ري ذكية وموفرة للمياه" data-en="Innovating smart and water-saving irrigation methods">ابتكار طرق ري ذكية وموفرة للمياه</li>
-                    <li data-ar="تطوير أسمدة عضوية متخصصة" data-en="Developing specialized organic fertilizers">تطوير أسمدة عضوية متخصصة</li>
-                    <li data-ar="بناء قاعدة بيانات شاملة للمحصول" data-en="Building a comprehensive database for the crop">بناء قاعدة بيانات شاملة للمحصول</li>
-                    <li data-ar="تطوير حلول لإعادة تدوير مخلفات البصل" data-en="Developing solutions for recycling onion waste">تطوير حلول لإعادة تدوير مخلفات البصل</li>
-                </ul>
+                <!-- Contract 2 -->
+                <div class="contract-card" data-aos="fade-up" data-aos-delay="200">
+                    <h3 data-translate="contract2-title">عقد بيع/توريد مخلفات زراعية</h3>
+                    <p class="text-gray-700 mb-4" data-translate="contract2-desc">عقد ثلاثي الأطراف بين المزارع والمشتري وAGRICODE كوسيط لبيع وتوريد المخلفات الزراعية.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded" data-translate="contract2-tag1">تفاصيل واضحة</span>
+                        <span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded" data-translate="contract2-tag2">ضمان الدفع</span>
+                        <span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded" data-translate="contract2-tag3">عمولة معلنة</span>
+                    </div>
+                    <a href="#" class="text-green-700 font-medium hover:underline" data-translate="download-contract">تحميل نموذج العقد <i class="fas fa-download mr-1"></i></a>
+                </div>
             </div>
         </div>
     </section>
+    
     <!-- Contact Section -->
-    <section id="contact" class="section bg-light">
-        <div class="container">
-            <h2 class="section-title" data-aos="fade-up" data-ar="تواصل معنا" data-en="Contact Us">تواصل معنا</h2>
+    <section id="contact" class="section-padding bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="section-title" data-aos="fade-up" data-translate="contact-title">اتصل بنا</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="200" data-translate="contact-subtitle">نحن هنا لمساعدتك في رحلتك نحو الزراعة الذكية</p>
+            </div>
             
-            <div class="row">
-                <div class="col-lg-8 mx-auto">
-                    <div class="contact-form" data-aos="fade-up" data-aos-delay="200">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div data-aos="fade-right">
+                    <div class="bg-white rounded-xl shadow-lg p-8">
+                        <h3 class="text-xl font-bold text-green-700 mb-6" data-translate="contact-form-title">أرسل لنا رسالة</h3>
                         <form id="contactForm">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" id="fullName" data-ar-placeholder="الاسم الكامل" data-en-placeholder="Full Name" placeholder="الاسم الكامل" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="email" class="form-control" id="email" data-ar-placeholder="البريد الإلكتروني" data-en-placeholder="Email Address" placeholder="البريد الإلكتروني" required>
-                                </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 mb-2" for="name" data-translate="form-name">الاسم</label>
+                                <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <input type="tel" class="form-control" id="phone" data-ar-placeholder="رقم الهاتف" data-en-placeholder="Phone Number" placeholder="رقم الهاتف" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <select class="form-select" id="inquiryType" required>
-                                        <option value="" selected data-ar="نوع الاستفسار" data-en="Inquiry Type">نوع الاستفسار</option>
-                                        <option value="farmer" data-ar="مزارع لديه مخلفات" data-en="Farmer with Waste">مزارع لديه مخلفات</option>
-                                        <option value="company" data-ar="شركة تبحث عن مخلفات" data-en="Company Looking for Waste">شركة تبحث عن مخلفات</option>
-                                        <option value="onion" data-ar="خدمات البصل" data-en="Onion Services">خدمات البصل</option>
-                                        <option value="partnership" data-ar="شراكة تجارية" data-en="Business Partnership">شراكة تجارية</option>
-                                        <option value="consulting" data-ar="استشارات" data-en="Consulting">استشارات</option>
-                                        <option value="other" data-ar="أخرى" data-en="Other">أخرى</option>
-                                    </select>
-                                </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 mb-2" for="email" data-translate="form-email">البريد الإلكتروني</label>
+                                <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
                             </div>
-                            <textarea class="form-control" id="message" rows="5" data-ar-placeholder="رسالتك" data-en-placeholder="Your Message" placeholder="رسالتك" required></textarea>
-                            <button type="submit" class="whatsapp-btn" data-ar="إرسال الرسالة عبر واتساب" data-en="Send Message via WhatsApp">
-                                <i class="fab fa-whatsapp"></i>
-                                <span data-ar="إرسال الرسالة عبر واتساب" data-en="Send Message via WhatsApp">إرسال الرسالة عبر واتساب</span>
-                            </button>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 mb-2" for="phone" data-translate="form-phone">رقم الهاتف</label>
+                                <input type="tel" id="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                            </div>
+                            <div class="mb-6">
+                                <label class="block text-gray-700 mb-2" for="message" data-translate="form-message">الرسالة</label>
+                                <textarea id="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required></textarea>
+                            </div>
+                            <button type="submit" class="btn-primary w-full" data-translate="send-message">إرسال الرسالة</button>
                         </form>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 mb-4">
-                    <div class="footer-widget">
-                        <h3 data-ar="AGRICODE" data-en="AGRICODE">AGRICODE</h3>
-                        <p data-ar="نحن وسيطك الموثوق في تدوير المخلفات الزراعية، ونقدم خدمات متخصصة لمحصول البصل. نربط بين المزارعين والشركات لتحويل المخلفات إلى موارد قيمة والمساهمة في اقتصاد دائري مستدام." data-en="We are your trusted partner in agricultural waste recycling and provide specialized services for the onion crop. We connect farmers with companies to transform waste into valuable resources and contribute to a sustainable circular economy.">نحن وسيطك الموثوق في تدوير المخلفات الزراعية، ونقدم خدمات متخصصة لمحصول البصل. نربط بين المزارعين والشركات لتحويل المخلفات إلى موارد قيمة والمساهمة في اقتصاد دائري مستدام.</p>
-                        <div class="social-icons mt-3">
-                            <a href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#"><i class="fab fa-tiktok"></i></a>
-                            <a href="#"><i class="fab fa-instagram"></i></a>
-                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                
+                <div data-aos="fade-left">
+                    <div class="bg-white rounded-xl shadow-lg p-8 h-full">
+                        <h3 class="text-xl font-bold text-green-700 mb-6" data-translate="contact-info-title">معلومات التواصل</h3>
+                        
+                        <div class="mb-6">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-green-100 p-3 rounded-full mr-4">
+                                    <i class="fas fa-map-marker-alt text-green-700"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold" data-translate="contact-address">العنوان</h4>
+                                    <p class="text-gray-600">المنصورة، مصر</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center mb-4">
+                                <div class="bg-green-100 p-3 rounded-full mr-4">
+                                    <i class="fas fa-phone text-green-700"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold" data-translate="contact-phone">الهاتف</h4>
+                                    <p class="text-gray-600">01501021670</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center mb-4">
+                                <div class="bg-green-100 p-3 rounded-full mr-4">
+                                    <i class="fas fa-envelope text-green-700"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold" data-translate="contact-email">البريد الإلكتروني</h4>
+                                    <p class="text-gray-600">info@agricode.com</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-bold mb-4" data-translate="follow-us">تابعنا على وسائل التواصل</h4>
+                            <div class="social-icons">
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-youtube"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                
-                <div class="col-lg-4 mb-4">
-                    <div class="footer-widget">
-                        <h3 data-ar="روابط سريعة" data-en="Quick Links">روابط سريعة</h3>
-                        <ul class="footer-links">
-                            <li><a href="#home" data-ar="الرئيسية" data-en="Home">الرئيسية</a></li>
-                            <li><a href="#about" data-ar="من نحن" data-en="About Us">من نحن</a></li>
-                            <li><a href="#onion-services" data-ar="خدمات البصل" data-en="Onion Services">خدمات البصل</a></li>
-                            <li><a href="#process" data-ar="كيفية العمل" data-en="How It Works">كيفية العمل</a></li>
-                            <li><a href="#services" data-ar="خدماتنا" data-en="Our Services">خدماتنا</a></li>
-                            <li><a href="#pricing" data-ar="الأسعار" data-en="Pricing">الأسعار</a></li>
-                            <li><a href="#contact" data-ar="تواصل معنا" data-en="Contact Us">تواصل معنا</a></li>
-                        </ul>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="footer-widget">
+                    <div class="text-2xl font-bold text-green-700 mb-4">AGRICODE</div>
+                    <p class="text-gray-400" data-translate="footer-desc">ثورة في التكنولوجيا الزراعية لتحقيق الاستدامة وزيادة الإنتاجية</p>
+                    <div class="social-icons mt-4">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
                 
-                <div class="col-lg-4 mb-4">
-                    <div class="footer-widget">
-                        <h3 data-ar="معلومات التواصل" data-en="Contact Information">معلومات التواصل</h3>
-                        <ul class="footer-links">
-                            <li><i class="fas fa-map-marker-alt ms-2"></i> <span data-ar="القاهرة، مصر" data-en="Cairo, Egypt">القاهرة، مصر</span></li>
-                            <li><i class="fas fa-phone ms-2"></i> <span data-ar="+20 150 102 1670" data-en="+20 150 102 1670">+20 150 102 1670</span></li>
-                            <li><i class="fas fa-envelope ms-2"></i> <span data-ar="info@agricode.com" data-en="info@agricode.com">info@agricode.com</span></li>
-                            <li><i class="fas fa-clock ms-2"></i> <span data-ar="السبت - الخميس: 9AM - 5PM" data-en="Saturday - Thursday: 9AM - 5PM">السبت - الخميس: 9AM - 5PM</span></li>
-                        </ul>
-                    </div>
+                <div class="footer-widget">
+                    <h3 data-translate="footer-quick-links">روابط سريعة</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home" data-translate="nav-home">الرئيسية</a></li>
+                        <li><a href="#about" data-translate="nav-about">من نحن</a></li>
+                        <li><a href="#services" data-translate="nav-services">خدماتنا</a></li>
+                        <li><a href="#pricing" data-translate="nav-pricing">الأسعار</a></li>
+                        <li><a href="#contact" data-translate="nav-contact">اتصل بنا</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-widget">
+                    <h3 data-translate="footer-services">خدماتنا</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" data-translate="footer-service1">متابعة المحاصيل</a></li>
+                        <li><a href="#" data-translate="footer-service2">تدوير المخلفات</a></li>
+                        <li><a href="#" data-translate="footer-service3">المساعد الذكي</a></li>
+                        <li><a href="#" data-translate="footer-service4">المحتوى التوعوي</a></li>
+                        <li><a href="#" data-translate="footer-service5">التسويق الزراعي</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-widget">
+                    <h3 data-translate="footer-newsletter">النشرة البريدية</h3>
+                    <p class="text-gray-400 mb-4" data-translate="footer-newsletter-desc">اشترك في نشرتنا البريدية للحصول على آخر الأخبار والعروض</p>
+                    <form id="newsletterForm" class="flex">
+                        <input type="email" placeholder="بريدك الإلكتروني" class="px-4 py-2 rounded-l-lg focus:outline-none w-full" data-translate="newsletter-placeholder">
+                        <button type="submit" class="bg-green-700 text-white px-4 py-2 rounded-r-lg hover:bg-green-800 transition" data-translate="newsletter-subscribe">اشترك</button>
+                    </form>
                 </div>
             </div>
             
             <div class="copyright">
-                <p data-ar="&copy; 2025 AGRICODE. جميع الحقوق محفوظة." data-en="&copy; 2025 AGRICODE. All Rights Reserved.">&copy; 2025 AGRICODE. جميع الحقوق محفوظة.</p>
+                <p data-translate="copyright">&copy; 2023 AGRICODE. جميع الحقوق محفوظة. تصميم وتطوير <span class="text-green-500">المهندس أحمد توحيد</span></p>
             </div>
         </div>
     </footer>
-    <!-- Scripts -->
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- AOS Animation -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     
     <script>
         // Initialize AOS
         AOS.init({
             duration: 1000,
-            once: true,
-            easing: 'ease-out'
+            once: true
         });
         
-        // Language switching functionality
-        const langDropdown = document.getElementById('langDropdown');
-        const langOptions = document.getElementById('langOptions');
-        const currentLangSpan = document.getElementById('currentLang');
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+        const mobileMenuSidebar = document.getElementById('mobileMenuSidebar');
+        const mobileMenuClose = document.getElementById('mobileMenuClose');
+        const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
         
-        langDropdown.addEventListener('click', () => {
-            langOptions.style.display = langOptions.style.display === 'block' ? 'none' : 'block';
+        function openMobileMenu() {
+            mobileMenuOverlay.classList.add('active');
+            mobileMenuSidebar.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeMobileMenu() {
+            mobileMenuOverlay.classList.remove('active');
+            mobileMenuSidebar.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        mobileMenuBtn.addEventListener('click', openMobileMenu);
+        mobileMenuClose.addEventListener('click', closeMobileMenu);
+        mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+        
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
         });
         
-        // Close language options when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!langDropdown.contains(e.target)) {
-                langOptions.style.display = 'none';
+        // Language Switcher
+        const langBtn = document.getElementById('langBtn');
+        const body = document.body;
+        let isEnglish = false;
+        
+        // Translation data
+        const translations = {
+            'ar': {
+                'hero-title': 'ثورة في التكنولوجيا الزراعية',
+                'hero-subtitle': 'AGRICODE - حلول متكاملة لزيادة الإنتاجية وتحقيق الاستدامة في الزراعة المصرية',
+                'discover-services': 'اكتشف خدماتنا',
+                'request-quote': 'اطلب عرض سعر',
+                'about-title': 'من نحن',
+                'about-subtitle': 'AGRICODE هي شركة ناشئة رائدة في مجال التكنولوجيا الزراعية (AgriTech)، تهدف إلى إحداث نقلة نوعية في قطاع الزراعة المصرية من خلال حلول رقمية متكاملة',
+                'vision-title': 'رؤيتنا',
+                'vision-text': 'تحويل الزراعة المصرية إلى نموذج رقمي مستدام، حيث يحقق كل مزارع أقصى جودة وإنتاجية بأقل تكلفة وبصمة بيئية إيجابية.',
+                'mission-title': 'رسالتنا',
+                'mission-text': 'تمكين المزارعين المصريين بتقنيات الزراعة الرقمية المتكاملة، من خلال منصة AGRICODE التي تقدم متابعة دقيقة للمحاصيل، وإدارة مخلفات زراعية مربحة، واستشارات ذكاء اصطناعي موثوقة، وربط فعال بالأسواق، مع ضمان استدامة الموارد.',
+                'founder-title': 'المؤسس والرائد',
+                'founder-position': 'مؤسس ورائد أعمال AGRICODE',
+                'founder-bio': 'خريج هندسة الزراعة وله خبرة تزيد عن 10 سنوات في مجال التكنولوجيا الزراعية. يطمح إلى تحويل التحديات الزراعية في مصر إلى فرص للنمو والابتكار من خلال الحلول الرقمية.',
+                'services-title': 'خدماتنا',
+                'services-subtitle': 'نقدم حلولاً متكاملة ومبتكرة لمواجهة التحديات الزراعية وتعزيز الاستدامة',
+                'service1-title': 'متابعة المحاصيل',
+                'service1-desc': 'فريق من المهندسين الزراعيين يتابع محاصيلك خطوة بخطوة لضمان أعلى جودة وإنتاجية',
+                'service1-feature1': 'زيارات ميدانية منتظمة',
+                'service1-feature2': 'تقارير مفصلة عن حالة المحصول',
+                'service1-feature3': 'استشارات فورية عبر الإنترنت',
+                'service2-title': 'تدوير المخلفات',
+                'service2-desc': 'منصة رقمية تربط بين المزارعين ومصانع إعادة التدوير لتحويل النفايات إلى دخل',
+                'service2-feature1': 'عرض وبيع المخلفات بسهولة',
+                'service2-feature2': 'الوصول لشبكة واسعة من المصانع',
+                'service2-feature3': 'عقود واضحة وشفافة',
+                'service3-title': 'المساعد الذكي',
+                'service3-desc': 'نموذج ذكاء اصطناعي يعمل كـ "مهندس زراعي افتراضي" لمساعدتك في كل خطوة',
+                'service3-feature1': 'جدول زمني دقيق للعمليات',
+                'service3-feature2': 'تنبيهات مبكرة للأمراض',
+                'service3-feature3': 'نصائح مخصصة لكل محصول',
+                'service4-title': 'المحتوى التوعوي',
+                'service4-desc': 'مقالات وفيديوهات تعليمية لنشر الوعي بأهمية الزراعة الرقمية والاستدامة',
+                'service4-feature1': 'مقالات متخصصة ومحدثة',
+                'service4-feature2': 'فيديوهات توضيحية عملية',
+                'service4-feature3': 'نصائح من خبراء الزراعة',
+                'challenges-title': 'التحديات والحلول',
+                'challenges-subtitle': 'نواجه التحديات الزراعية بحلول مبتكرة وفعالة',
+                'challenge1-title': 'انخفاض الوعي الرقمي لدى المزارعين',
+                'challenge1-desc': 'صعوبة تبني المزارعين للتكنولوجيا الحديثة بسبب قلة الخبرة والخوف من التعقيد',
+                'solution-title': 'حلولنا',
+                'challenge1-solution1': '• حملات توعية مكثفة عبر وسائل التواصل',
+                'challenge1-solution2': '• واجهة مستخدم بسيطة وسهلة الاستخدام',
+                'challenge1-solution3': '• دعم ميداني وفني مستمر',
+                'challenge2-title': 'صعوبة الوصول للمزارعين البعيدين',
+                'challenge2-desc': 'تحديات الوصول للمزارعين في المناطق النائية وتقديم الخدمات لهم',
+                'challenge2-solution1': '• شراكات مع الجمعيات الزراعية المحلية',
+                'challenge2-solution2': '• فروع وممثلين في المناطق الزراعية',
+                'challenge2-solution3': '• وكلاء محليون موثوقون',
+                'challenge3-title': 'ضمان جودة البيانات ودقة الذكاء الاصطناعي',
+                'challenge3-desc': 'الحاجة لبيانات دقيقة وموثوقة لضمان فعالية حلول الذكاء الاصطناعي',
+                'challenge3-solution1': '• بيانات مدققة من خبراء زراعيين',
+                'challenge3-solution2': '• تحديث مستمر لنماذج الذكاء الاصطناعي',
+                'challenge3-solution3': '• آليات تغذية راجعة من المزارعين',
+                'challenge4-title': 'تنوع وتشتت المخلفات الزراعية',
+                'challenge4-desc': 'صعوبة إدارة وتصنيف المخلفات الزراعية المتنوعة وربطها بالصناعات المناسبة',
+                'challenge4-solution1': '• نظام تصنيف دقيق للمخلفات',
+                'challenge4-solution2': '• شبكة واسعة من المصانع الشريكة',
+                'challenge4-solution3': '• حلول لوجستية مرنة',
+                'swot-title': 'تحليل SWOT',
+                'swot-subtitle': 'تحليل نقاط القوة والضعف والفرص والتهديدات',
+                'strengths-title': 'نقاط القوة',
+                'strengths-1': '• نموذج أعمال متكامل وفريد',
+                'strengths-2': '• التركيز على الجودة والاستدامة',
+                'strengths-3': '• فريق متخصص من الخبراء',
+                'strengths-4': '• حلول عملية للتحديات الحقيقية',
+                'strengths-5': '• منصة رقمية سهلة الاستخدام',
+                'strengths-6': '• إمكانية التوسع المستقبلي',
+                'weaknesses-title': 'نقاط الضعف',
+                'weaknesses-1': '• كيان ناشئ بدون سمرة طويلة',
+                'weaknesses-2': '• الاعتماد على التمويل الخارجي',
+                'weaknesses-3': '• تحدي تبني التكنولوجيا لدى المزارعين',
+                'weaknesses-4': '• صعوبة إدارة العمليات الميدانية',
+                'weaknesses-5': '• جمع البيانات الأولية',
+                'weaknesses-6': '• الاعتماد على شركاء خارجيين',
+                'opportunities-title': 'الفرص',
+                'opportunities-1': '• نمو سوق التكنولوجيا الزراعية',
+                'opportunities-2': '• الدعم الحكومي للتحول الرقمي',
+                'opportunities-3': '• الطلب المتزايد على المنتجات العضوية',
+                'opportunities-4': '• توجه نحو الاقتصاد الدائري',
+                'opportunities-5': '• إمكانية الشراكات الاستراتيجية',
+                'opportunities-6': '• التوسع الجغرافي والمحصولي',
+                'threats-title': 'التهديدات',
+                'threats-1': '• منافسة متزايدة في السوق',
+                'threats-2': '• تغيرات تشريعية محتملة',
+                'threats-3': '• تقلبات أسعار المحاصيل والمخلفات',
+                'threats-4': '• المخاطر التقنية والأمنية',
+                'threats-5': '• مقاومة التغيير من المزارعين',
+                'threats-6': '• العوامل الخارجية (المناخ، الأوبئة)',
+                'personas-title': 'شخصيات المستخدمين',
+                'personas-subtitle': 'نصمم حلولنا لتلبية احتياجات شرائح مختلفة من المزارعين',
+                'persona1-name': 'أحمد عبد الله',
+                'persona1-role': 'المزارع التقليدي',
+                'persona1-type': 'صغير/متوسط الحيازة',
+                'goals-title': 'أهدافه:',
+                'persona1-goal1': '• حماية المحصول من الأمراض',
+                'persona1-goal2': '• معرفة مواعيد الري والتسميد',
+                'persona1-goal3': '• بيع المحصول بسعر عادل',
+                'challenges-title': 'تحدياته:',
+                'persona1-challenge1': '• الأمراض المفاجئة',
+                'persona1-challenge2': '• استغلال التجار',
+                'persona1-challenge3': '• تراكم المخلفات',
+                'persona2-name': 'فاطمة حسن',
+                'persona2-role': 'المزارعة الكبيرة',
+                'persona2-type': 'كبيرة الحيازة',
+                'persona2-goal1': '• زيادة الربحية والكفاءة',
+                'persona2-goal2': '• ضمان الجودة للتصدير',
+                'persona2-goal3': '• تطبيق الاستدامة',
+                'persona2-challenge1': '• إدارة المخلفات الضخمة',
+                'persona2-challenge2': '• تعقيدات التسويق',
+                'persona2-challenge3': '• الحصول على شهادات الجودة',
+                'persona3-name': 'خالد إبراهيم',
+                'persona3-role': 'مدير مصنع',
+                'persona3-type': 'شريك صناعي',
+                'persona3-goal1': '• تأمين مواد خام بجودة عالية',
+                'persona3-goal2': '• ضمان تدفق مستمر للتوريد',
+                'persona3-goal3': '• تقليل تكاليف التوريد',
+                'persona3-challenge1': '• الوصول لمزارعين صغار',
+                'persona3-challenge2': '• تقلب جودة المخلفات',
+                'persona3-challenge3': '• عدم استقرار الأسعار',
+                'persona4-name': 'سارة أحمد',
+                'persona4-role': 'المزارعة الشابة',
+                'persona4-type': 'خريجة زراعة',
+                'persona4-goal1': '• تطبيق المعرفة النظرية',
+                'persona4-goal2': '• زراعة عضوية مستدامة',
+                'persona4-goal3': '• إنشاء مشروع ناجح',
+                'persona4-challenge1': '• نقص الخبرة العملية',
+                'persona4-challenge2': '• صعوبة الحصول على تمويل',
+                'persona4-challenge3': '• نظرة المجتمع التقليدية',
+                'pricing-title': 'باقات الأسعار',
+                'pricing-subtitle': 'اختر الباقة التي تناسب احتياجاتك',
+                'currency': 'جنيه/شهر',
+                'package1-title': 'المبتدئ الذكي',
+                'package1-feature1': 'المساعد الذكي (AI)',
+                'package1-feature2': 'مكتبة البصل التفاعلية',
+                'package1-feature3': 'المحتوى التوعوي',
+                'package1-feature4': 'عرض مخلف واحد شهرياً',
+                'package1-feature5': 'دعم فني أساسي',
+                'package2-title': 'المحترف الميداني',
+                'package2-feature1': 'كل مميزات الباقة المبتدئ',
+                'package2-feature2': '4 زيارات ميدانية سنوياً',
+                'package2-feature3': 'تقارير مفصلة',
+                'package2-feature4': 'استشارة أونلاين مخصصة',
+                'package2-feature5': 'عرض 3 مخلفات شهرياً',
+                'package3-title': 'الشاملة المتكاملة',
+                'package3-feature1': 'كل مميزات الباقة المحترف',
+                'package3-feature2': '8 زيارات ميدانية سنوياً',
+                'package3-feature3': 'استشارات غير محدودة',
+                'package3-feature4': 'عروض مخلفات غير محدودة',
+                'package3-feature5': 'تسويق متكامل للمحصول',
+                'popular': 'الأكثر شعبية',
+                'package4-title': 'المؤسسة/الشريك',
+                'custom': 'مخصص',
+                'package4-subtitle': 'حسب الاحتياج',
+                'package4-feature1': 'حلول متكاملة للمتابعة',
+                'package4-feature2': 'نظام AI مخصص',
+                'package4-feature3': 'منصة تدوير مخصصة',
+                'package4-feature4': 'تقارير وتحليلات متقدمة',
+                'package4-feature5': 'مدير مشروع مخصص',
+                'choose-plan': 'اختر الباقة',
+                'request-quote': 'اطلب عرض سعر',
+                'contracts-title': 'نماذج العقود',
+                'contracts-subtitle': 'عقود واضحة وشفافة تحمي حقوق جميع الأطراف',
+                'contract1-title': 'عقد خدمة متابعة المحاصيل',
+                'contract1-desc': 'عقد بين شركة AGRICODE والمزارع لتقديم خدمة متابعة المحاصيل شاملة الزيارات الميدانية والتقارير والاستشارات.',
+                'contract1-tag1': 'شفافية',
+                'contract1-tag2': 'ضمان جودة',
+                'contract1-tag3': 'حماية حقوق',
+                'contract2-title': 'عقد بيع/توريد مخلفات زراعية',
+                'contract2-desc': 'عقد ثلاثي الأطراف بين المزارع والمشتري وAGRICODE كوسيط لبيع وتوريد المخلفات الزراعية.',
+                'contract2-tag1': 'تفاصيل واضحة',
+                'contract2-tag2': 'ضمان الدفع',
+                'contract2-tag3': 'عمولة معلنة',
+                'download-contract': 'تحميل نموذج العقد',
+                'contact-title': 'اتصل بنا',
+                'contact-subtitle': 'نحن هنا لمساعدتك في رحلتك نحو الزراعة الذكية',
+                'contact-form-title': 'أرسل لنا رسالة',
+                'form-name': 'الاسم',
+                'form-email': 'البريد الإلكتروني',
+                'form-phone': 'رقم الهاتف',
+                'form-message': 'الرسالة',
+                'send-message': 'إرسال الرسالة',
+                'contact-info-title': 'معلومات التواصل',
+                'contact-address': 'العنوان',
+                'contact-phone': 'الهاتف',
+                'contact-email': 'البريد الإلكتروني',
+                'follow-us': 'تابعنا على وسائل التواصل',
+                'footer-desc': 'ثورة في التكنولوجيا الزراعية لتحقيق الاستدامة وزيادة الإنتاجية',
+                'footer-quick-links': 'روابط سريعة',
+                'nav-home': 'الرئيسية',
+                'nav-about': 'من نحن',
+                'nav-services': 'خدماتنا',
+                'nav-pricing': 'الأسعار',
+                'nav-contact': 'اتصل بنا',
+                'footer-services': 'خدماتنا',
+                'footer-service1': 'متابعة المحاصيل',
+                'footer-service2': 'تدوير المخلفات',
+                'footer-service3': 'المساعد الذكي',
+                'footer-service4': 'المحتوى التوعوي',
+                'footer-service5': 'التسويق الزراعي',
+                'footer-newsletter': 'النشرة البريدية',
+                'footer-newsletter-desc': 'اشترك في نشرتنا البريدية للحصول على آخر الأخبار والعروض',
+                'newsletter-placeholder': 'بريدك الإلكتروني',
+                'newsletter-subscribe': 'اشترك',
+                'copyright': '&copy; 2023 AGRICODE. جميع الحقوق محفوظة. تصميم وتطوير المهندس أحمد توحيد',
+                'notification-title': 'مرحباً بك في AGRICODE',
+                'notification-text': 'استكشف ثورة التكنولوجيا الزراعية معنا',
+                'notification-success': 'تم الإرسال بنجاح!',
+                'notification-success-text': 'شكراً لتواصلك معنا، سنتواصل معك قريباً',
+                'newsletter-success': 'تم الاشتراك بنجاح!',
+                'newsletter-success-text': 'شكراً لاشتراكك في نشرتنا البريدية',
+                'whatsapp-message': '*رسالة جديدة من موقع AGRICODE*\n\n*الاسم:* {name}\n*البريد الإلكتروني:* {email}\n*رقم الهاتف:* {phone}\n*الرسالة:*\n{message}\n\n*العنوان:* المنصورة، مصر\n*هاتف:* 01501021670'
+            },
+            'en': {
+                'hero-title': 'Revolution in Agricultural Technology',
+                'hero-subtitle': 'AGRICODE - Integrated solutions to increase productivity and achieve sustainability in Egyptian agriculture',
+                'discover-services': 'Discover Our Services',
+                'request-quote': 'Request a Quote',
+                'about-title': 'About Us',
+                'about-subtitle': 'AGRICODE is a leading startup in the field of Agricultural Technology (AgriTech), aiming to make a qualitative leap in the Egyptian agricultural sector through integrated digital solutions',
+                'vision-title': 'Our Vision',
+                'vision-text': 'Transforming Egyptian agriculture into a sustainable digital model, where every farmer achieves the highest quality and productivity at the lowest cost with a positive environmental footprint.',
+                'mission-title': 'Our Mission',
+                'mission-text': 'Empowering Egyptian farmers with integrated digital agricultural technologies, through the AGRICODE platform that provides precise crop monitoring, profitable agricultural waste management, reliable AI consultations, and effective market linkage, while ensuring resource sustainability.',
+                'founder-title': 'Founder & CEO',
+                'founder-position': 'Founder & CEO of AGRICODE',
+                'founder-bio': 'A graduate of Agricultural Engineering with over 10 years of experience in agricultural technology. Aims to transform agricultural challenges in Egypt into growth and innovation opportunities through digital solutions.',
+                'services-title': 'Our Services',
+                'services-subtitle': 'We offer integrated and innovative solutions to address agricultural challenges and promote sustainability',
+                'service1-title': 'Crop Monitoring',
+                'service1-desc': 'A team of agricultural engineers follows your crops step by step to ensure the highest quality and productivity',
+                'service1-feature1': 'Regular field visits',
+                'service1-feature2': 'Detailed reports on crop status',
+                'service1-feature3': 'Instant online consultations',
+                'service2-title': 'Waste Recycling',
+                'service2-desc': 'A digital platform connecting farmers with recycling factories to turn waste into income',
+                'service2-feature1': 'Easy display and sale of waste',
+                'service2-feature2': 'Access to a wide network of factories',
+                'service2-feature3': 'Clear and transparent contracts',
+                'service3-title': 'AI Assistant',
+                'service3-desc': 'An AI model that works as a "virtual agricultural engineer" to assist you every step of the way',
+                'service3-feature1': 'Precise timeline for operations',
+                'service3-feature2': 'Early disease alerts',
+                'service3-feature3': 'Customized advice for each crop',
+                'service4-title': 'Awareness Content',
+                'service4-desc': 'Educational articles and videos to spread awareness about the importance of digital agriculture and sustainability',
+                'service4-feature1': 'Specialized and updated articles',
+                'service4-feature2': 'Practical explanatory videos',
+                'service4-feature3': 'Advice from agricultural experts',
+                'challenges-title': 'Challenges & Solutions',
+                'challenges-subtitle': 'We address agricultural challenges with innovative and effective solutions',
+                'challenge1-title': 'Low Digital Awareness Among Farmers',
+                'challenge1-desc': 'Difficulty in farmers adopting modern technology due to lack of experience and fear of complexity',
+                'solution-title': 'Our Solutions',
+                'challenge1-solution1': '• Intensive awareness campaigns through social media',
+                'challenge1-solution2': '• Simple and user-friendly interface',
+                'challenge1-solution3': '• Continuous field and technical support',
+                'challenge2-title': 'Difficulty Reaching Remote Farmers',
+                'challenge2-desc': 'Challenges in reaching farmers in remote areas and providing services to them',
+                'challenge2-solution1': '• Partnerships with local agricultural associations',
+                'challenge2-solution2': '• Branches and representatives in agricultural areas',
+                'challenge2-solution3': '• Reliable local agents',
+                'challenge3-title': 'Ensuring Data Quality and AI Accuracy',
+                'challenge3-desc': 'Need for accurate and reliable data to ensure the effectiveness of AI solutions',
+                'challenge3-solution1': '• Data verified by agricultural experts',
+                'challenge3-solution2': '• Continuous updating of AI models',
+                'challenge3-solution3': '• Feedback mechanisms from farmers',
+                'challenge4-title': 'Diversity and Scattering of Agricultural Waste',
+                'challenge4-desc': 'Difficulty in managing and classifying diverse agricultural wastes and linking them to suitable industries',
+                'challenge4-solution1': '• Precise waste classification system',
+                'challenge4-solution2': '• Wide network of partner factories',
+                'challenge4-solution3': '• Flexible logistics solutions',
+                'swot-title': 'SWOT Analysis',
+                'swot-subtitle': 'Analysis of strengths, weaknesses, opportunities, and threats',
+                'strengths-title': 'Strengths',
+                'strengths-1': '• Integrated and unique business model',
+                'strengths-2': '• Focus on quality and sustainability',
+                'strengths-3': '• Specialized team of experts',
+                'strengths-4': '• Practical solutions to real challenges',
+                'strengths-5': '• User-friendly digital platform',
+                'strengths-6': '• Potential for future expansion',
+                'weaknesses-title': 'Weaknesses',
+                'weaknesses-1': '• New entity without long reputation',
+                'weaknesses-2': '• Dependence on external funding',
+                'weaknesses-3': '• Challenge of technology adoption among farmers',
+                'weaknesses-4': '• Difficulty in managing field operations',
+                'weaknesses-5': '• Collecting initial data',
+                'weaknesses-6': '• Dependence on external partners',
+                'opportunities-title': 'Opportunities',
+                'opportunities-1': '• Growth of the agricultural technology market',
+                'opportunities-2': '• Government support for digital transformation',
+                'opportunities-3': '• Increasing demand for organic products',
+                'opportunities-4': '• Trend towards circular economy',
+                'opportunities-5': '• Potential for strategic partnerships',
+                'opportunities-6': '• Geographical and crop expansion',
+                'threats-title': 'Threats',
+                'threats-1': '• Increasing competition in the market',
+                'threats-2': '• Potential legislative changes',
+                'threats-3': '• Fluctuations in crop and waste prices',
+                'threats-4': '• Technical and security risks',
+                'threats-5': '• Resistance to change from farmers',
+                'threats-6': '• External factors (climate, pandemics)',
+                'personas-title': 'User Personas',
+                'personas-subtitle': 'We design our solutions to meet the needs of different segments of farmers',
+                'persona1-name': 'Ahmed Abdallah',
+                'persona1-role': 'Traditional Farmer',
+                'persona1-type': 'Small/Medium Landowner',
+                'goals-title': 'His Goals:',
+                'persona1-goal1': '• Protect crops from diseases',
+                'persona1-goal2': '• Know irrigation and fertilization timings',
+                'persona1-goal3': '• Sell crops at a fair price',
+                'challenges-title': 'His Challenges:',
+                'persona1-challenge1': '• Sudden diseases',
+                'persona1-challenge2': '• Exploitation by traders',
+                'persona1-challenge3': '• Accumulation of waste',
+                'persona2-name': 'Fatma Hassan',
+                'persona2-role': 'Large Farmer',
+                'persona2-type': 'Large Landowner',
+                'persona2-goal1': '• Increase profitability and efficiency',
+                'persona2-goal2': '• Ensure quality for export',
+                'persona2-goal3': '• Apply sustainability',
+                'persona2-challenge1': '• Managing huge amounts of waste',
+                'persona2-challenge2': '• Marketing complexities',
+                'persona2-challenge3': '• Obtaining quality certificates',
+                'persona3-name': 'Khaled Ibrahim',
+                'persona3-role': 'Factory Manager',
+                'persona3-type': 'Industrial Partner',
+                'persona3-goal1': '• Secure high-quality raw materials',
+                'persona3-goal2': '• Ensure continuous supply flow',
+                'persona3-goal3': '• Reduce supply costs',
+                'persona3-challenge1': '• Reaching small farmers',
+                'persona3-challenge2': '• Fluctuation in waste quality',
+                'persona3-challenge3': '• Price instability',
+                'persona4-name': 'Sara Ahmed',
+                'persona4-role': 'Young Farmer',
+                'persona4-type': 'Agriculture Graduate',
+                'persona4-goal1': '• Apply theoretical knowledge',
+                'persona4-goal2': '• Sustainable organic farming',
+                'persona4-goal3': '• Create a successful project',
+                'persona4-challenge1': '• Lack of practical experience',
+                'persona4-challenge2': '• Difficulty obtaining funding',
+                'persona4-challenge3': '• Traditional societal views',
+                'pricing-title': 'Pricing Plans',
+                'pricing-subtitle': 'Choose the plan that suits your needs',
+                'currency': 'EGP/month',
+                'package1-title': 'Smart Starter',
+                'package1-feature1': 'AI Assistant',
+                'package1-feature2': 'Interactive Onion Library',
+                'package1-feature3': 'Awareness Content',
+                'package1-feature4': 'One waste listing per month',
+                'package1-feature5': 'Basic technical support',
+                'package2-title': 'Pro Field',
+                'package2-feature1': 'All Starter features',
+                'package2-feature2': '4 field visits per year',
+                'package2-feature3': 'Detailed reports',
+                'package2-feature4': 'Customized online consultation',
+                'package2-feature5': '3 waste listings per month',
+                'package3-title': 'All-Inclusive',
+                'package3-feature1': 'All Pro features',
+                'package3-feature2': '8 field visits per year',
+                'package3-feature3': 'Unlimited consultations',
+                'package3-feature4': 'Unlimited waste listings',
+                'package3-feature5': 'Integrated crop marketing',
+                'popular': 'Most Popular',
+                'package4-title': 'Enterprise/Partner',
+                'custom': 'Custom',
+                'package4-subtitle': 'Based on Needs',
+                'package4-feature1': 'Integrated monitoring solutions',
+                'package4-feature2': 'Custom AI system',
+                'package4-feature3': 'Custom recycling platform',
+                'package4-feature4': 'Advanced reports and analytics',
+                'package4-feature5': 'Dedicated project manager',
+                'choose-plan': 'Choose Plan',
+                'request-quote': 'Request Quote',
+                'contracts-title': 'Sample Contracts',
+                'contracts-subtitle': 'Clear and transparent contracts that protect the rights of all parties',
+                'contract1-title': 'Crop Monitoring Service Contract',
+                'contract1-desc': 'A contract between AGRICODE and the farmer to provide crop monitoring services including field visits, reports, and consultations.',
+                'contract1-tag1': 'Transparency',
+                'contract1-tag2': 'Quality Assurance',
+                'contract1-tag3': 'Rights Protection',
+                'contract2-title': 'Agricultural Waste Sale/Supply Contract',
+                'contract2-desc': 'A tripartite contract between the farmer, the buyer, and AGRICODE as an intermediary for the sale and supply of agricultural waste.',
+                'contract2-tag1': 'Clear Details',
+                'contract2-tag2': 'Payment Guarantee',
+                'contract2-tag3': 'Declared Commission',
+                'download-contract': 'Download Contract Template',
+                'contact-title': 'Contact Us',
+                'contact-subtitle': 'We are here to help you on your journey towards smart farming',
+                'contact-form-title': 'Send Us a Message',
+                'form-name': 'Name',
+                'form-email': 'Email',
+                'form-phone': 'Phone',
+                'form-message': 'Message',
+                'send-message': 'Send Message',
+                'contact-info-title': 'Contact Information',
+                'contact-address': 'Address',
+                'contact-phone': 'Phone',
+                'contact-email': 'Email',
+                'follow-us': 'Follow Us on Social Media',
+                'footer-desc': 'A revolution in agricultural technology to achieve sustainability and increase productivity',
+                'footer-quick-links': 'Quick Links',
+                'nav-home': 'Home',
+                'nav-about': 'About',
+                'nav-services': 'Services',
+                'nav-pricing': 'Pricing',
+                'nav-contact': 'Contact',
+                'footer-services': 'Our Services',
+                'footer-service1': 'Crop Monitoring',
+                'footer-service2': 'Waste Recycling',
+                'footer-service3': 'AI Assistant',
+                'footer-service4': 'Awareness Content',
+                'footer-service5': 'Agricultural Marketing',
+                'footer-newsletter': 'Newsletter',
+                'footer-newsletter-desc': 'Subscribe to our newsletter to get the latest news and offers',
+                'newsletter-placeholder': 'Your Email',
+                'newsletter-subscribe': 'Subscribe',
+                'copyright': '&copy; 2023 AGRICODE. All Rights Reserved. Designed & Developed by Engineer Ahmed Tawhid',
+                'notification-title': 'Welcome to AGRICODE',
+                'notification-text': 'Explore the revolution in agricultural technology with us',
+                'notification-success': 'Sent Successfully!',
+                'notification-success-text': 'Thank you for contacting us, we will get back to you soon',
+                'newsletter-success': 'Subscription Successful!',
+                'newsletter-success-text': 'Thank you for subscribing to our newsletter',
+                'whatsapp-message': '*New Message from AGRICODE Website*\n\n*Name:* {name}\n*Email:* {email}\n*Phone:* {phone}\n*Message:*\n{message}\n\n*Address:* Mansoura, Egypt\n*Phone:* 01501021670'
             }
-        });
+        };
         
-        // Language option click
-        document.querySelectorAll('.lang-option').forEach(option => {
-            option.addEventListener('click', () => {
-                const selectedLang = option.getAttribute('data-lang');
-                changeLanguage(selectedLang);
-                langOptions.style.display = 'none';
-            });
-        });
-        
-        // Change language function
-        function changeLanguage(lang) {
-            // Update current language display
-            currentLangSpan.textContent = lang === 'ar' ? 'العربية' : 'English';
+        langBtn.addEventListener('click', () => {
+            isEnglish = !isEnglish;
             
-            // Update HTML attributes
-            document.documentElement.lang = lang;
-            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-            
-            // Update body class
-            if (lang === 'en') {
-                document.body.classList.add('en');
+            if (isEnglish) {
+                body.classList.add('english');
+                body.setAttribute('lang', 'en');
+                body.setAttribute('dir', 'ltr');
+                langBtn.textContent = 'AR';
+                translatePage('en');
             } else {
-                document.body.classList.remove('en');
+                body.classList.remove('english');
+                body.setAttribute('lang', 'ar');
+                body.setAttribute('dir', 'rtl');
+                langBtn.textContent = 'EN';
+                translatePage('ar');
             }
-            
-            // Update all translatable elements
-            document.querySelectorAll('[data-ar]').forEach(element => {
-                if (lang === 'ar') {
-                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
-                        element.placeholder = element.getAttribute('data-ar');
-                    } else {
-                        element.textContent = element.getAttribute('data-ar');
-                    }
-                } else {
-                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
-                        element.placeholder = element.getAttribute('data-en');
-                    } else {
-                        element.textContent = element.getAttribute('data-en');
-                    }
+        });
+        
+        function translatePage(lang) {
+            // Translate all elements with data-translate attribute
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[lang][key]) {
+                    element.textContent = translations[lang][key];
                 }
             });
             
-            // Update select options
-            document.querySelectorAll('select option').forEach(option => {
-                if (option.hasAttribute('data-ar')) {
-                    option.textContent = lang === 'ar' ? option.getAttribute('data-ar') : option.getAttribute('data-en');
+            // Update navigation links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                const key = link.getAttribute('href').substring(1);
+                if (translations[lang][`nav-${key}`]) {
+                    link.textContent = translations[lang][`nav-${key}`];
                 }
             });
             
-            // Save language preference
-            localStorage.setItem('preferredLanguage', lang);
+            // Update mobile menu links
+            document.querySelectorAll('.mobile-menu-link').forEach(link => {
+                const key = link.getAttribute('href').substring(1);
+                if (translations[lang][`nav-${key}`]) {
+                    link.textContent = translations[lang][`nav-${key}`];
+                }
+            });
         }
         
-        // Load saved language preference
-        const savedLang = localStorage.getItem('preferredLanguage');
-        if (savedLang) {
-            changeLanguage(savedLang);
-        }
-        
-        // Welcome modal functionality
-        const welcomeModal = document.getElementById('welcomeModal');
-        const closeWelcome = document.getElementById('closeWelcome');
-        const startExploring = document.getElementById('startExploring');
-        
-        // Check if user has visited before
-        const hasVisited = localStorage.getItem('hasVisitedAgricode');
-        
-        if (!hasVisited) {
-            // Show welcome modal after a short delay
+        // Show Notification
+        setTimeout(() => {
+            const notification = document.getElementById('notification');
+            notification.classList.add('show');
+            
+            // Close notification
+            const closeBtn = notification.querySelector('.close');
+            closeBtn.addEventListener('click', () => {
+                notification.classList.remove('show');
+            });
+            
+            // Auto close after 5 seconds
             setTimeout(() => {
-                welcomeModal.classList.add('active');
-            }, 1000);
-        }
+                notification.classList.remove('show');
+            }, 5000);
+        }, 2000);
         
-        // Close welcome modal
-        function closeWelcomeModal() {
-            welcomeModal.classList.remove('active');
-            localStorage.setItem('hasVisitedAgricode', 'true');
-        }
+        // Contact Form
+        const contactForm = document.getElementById('contactForm');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form data
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const message = document.getElementById('message').value;
+            
+            // Format WhatsApp message
+            const whatsappMessage = translations[isEnglish ? 'en' : 'ar']['whatsapp-message']
+                .replace('{name}', name)
+                .replace('{email}', email)
+                .replace('{phone}', phone)
+                .replace('{message}', message);
+            
+            // Open WhatsApp with the message
+            const whatsappUrl = `https://wa.me/201501021670?text=${encodeURIComponent(whatsappMessage)}`;
+            window.open(whatsappUrl, '_blank');
+            
+            // Show success notification
+            const notification = document.getElementById('notification');
+            notification.querySelector('h4').textContent = translations[isEnglish ? 'en' : 'ar']['notification-success'];
+            notification.querySelector('p').textContent = translations[isEnglish ? 'en' : 'ar']['notification-success-text'];
+            notification.classList.add('show');
+            
+            // Reset form
+            contactForm.reset();
+            
+            // Close notification after 5 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 5000);
+        });
         
-        closeWelcome.addEventListener('click', closeWelcomeModal);
-        startExploring.addEventListener('click', closeWelcomeModal);
+        // Newsletter Form
+        const newsletterForm = document.getElementById('newsletterForm');
+        newsletterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Show success notification
+            const notification = document.getElementById('notification');
+            notification.querySelector('h4').textContent = translations[isEnglish ? 'en' : 'ar']['newsletter-success'];
+            notification.querySelector('p').textContent = translations[isEnglish ? 'en' : 'ar']['newsletter-success-text'];
+            notification.classList.add('show');
+            
+            // Reset form
+            newsletterForm.reset();
+            
+            // Close notification after 5 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 5000);
+        });
         
-        // Smooth scrolling
+        // Smooth Scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
             });
-        });
-        
-        // WhatsApp form submission
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form values
-            const fullName = document.getElementById('fullName').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
-            const inquiryType = document.getElementById('inquiryType');
-            const inquiryTypeText = inquiryType.options[inquiryType.selectedIndex].text;
-            const message = document.getElementById('message').value;
-            
-            // Get current language
-            const currentLang = document.documentElement.lang;
-            
-            // Create message based on language
-            let whatsappMessage;
-            if (currentLang === 'ar') {
-                whatsappMessage = `♻️ *رسالة جديدة من موقع AGRICODE* ♻️%0A%0A`;
-                whatsappMessage += `━━━━━━━━━━━━━━━━━━━━━%0A%0A`;
-                whatsappMessage += `👤 *الاسم الكامل:* ${fullName}%0A`;
-                whatsappMessage += `📧 *البريد الإلكتروني:* ${email}%0A`;
-                whatsappMessage += `📱 *رقم الهاتف:* ${phone}%0A`;
-                whatsappMessage += `📋 *نوع الاستفسار:* ${inquiryTypeText}%0A`;
-                whatsappMessage += `%0A💬 *الرسالة:*%0A${message}%0A%0A`;
-                whatsappMessage += `━━━━━━━━━━━━━━━━━━━━━%0A%0A`;
-                whatsappMessage += `🌐 *تم الإرسال عبر الموقع الرسمي لـ AGRICODE*%0A`;
-                whatsappMessage += `📅 *تاريخ الإرسال:* ${new Date().toLocaleDateString('ar-EG')}`;
-            } else {
-                whatsappMessage = `♻️ *New message from AGRICODE website* ♻️%0A%0A`;
-                whatsappMessage += `━━━━━━━━━━━━━━━━━━━━━%0A%0A`;
-                whatsappMessage += `👤 *Full Name:* ${fullName}%0A`;
-                whatsappMessage += `📧 *Email:* ${email}%0A`;
-                whatsappMessage += `📱 *Phone:* ${phone}%0A`;
-                whatsappMessage += `📋 *Inquiry Type:* ${inquiryTypeText}%0A`;
-                whatsappMessage += `%0A💬 *Message:*%0A${message}%0A%0A`;
-                whatsappMessage += `━━━━━━━━━━━━━━━━━━━━━%0A%0A`;
-                whatsappMessage += `🌐 *Sent via AGRICODE official website*%0A`;
-                whatsappMessage += `📅 *Sent on:* ${new Date().toLocaleDateString('en-US')}`;
-            }
-            
-            // Create WhatsApp URL
-            const whatsappUrl = `https://wa.me/201501021670?text=${encodeURIComponent(whatsappMessage)}`;
-            
-            // Open WhatsApp
-            window.open(whatsappUrl, '_blank');
-            
-            // Reset form
-            this.reset();
         });
     </script>
 </body>
